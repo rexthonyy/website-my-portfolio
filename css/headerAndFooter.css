@@ -45,12 +45,22 @@ nav ul li{
 	margin: 0 10px;
 }
 nav ul li a{
-	color: black;
 	font-size: 0.9em;
 	border-radius: 20px;
 	padding: 7px 13px;
 }
-nav ul li a.active,nav ul li a:hover{
+.nav_item_inactive_transparent{
+	color: white;
+	transition: .5s;
+}
+.nav_item_inactive_translucent{
+	color: black;
+	transition: .5s;
+}
+.nav_item_active{
+	color: #1b9bff;
+}
+nav ul li a:hover{
 	color: white;
 	background: #1b9bff;
 	transition: .2s;
