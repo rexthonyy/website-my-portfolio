@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<title>Rex's Website</title>
 		<link type="text/css" rel="stylesheet" href="css/headerAndFooter.css"/>
+		<link type="text/css" rel="stylesheet" href="css/hero.css"/>
 		<script type="text/javascript" src="js/headerAndFooter.js"></script>
 		<link type="text/css" rel="stylesheet" href="css/index.css"/>
 		<link type="image/x-icon" rel="icon" href="images/icons/my_header_icon.png"/>
@@ -13,26 +14,48 @@
 	</head>
 
 	<body>
-		<nav id="nav" class="nav_transparent">
-			<input type="checkbox" id="check">
-				<label for="check" class="checkbtn">
-					<i class="fas fa-bars"></i>
+		<div id="heroBg">
+			<nav id="nav" class="nav_transparent">
+				<input type="checkbox" id="check">
+					<label for="check" id="nav_hamburger" class="checkbtn_transparent">
+						<i class="fas fa-bars"></i>
+					</label>
+				<label id="logo">
+					<a href="#">
+						<img src="images/icons/my_header_icon.png" alt="website icon"/>
+					</a>
 				</label>
-			<label class="logo">
-				<a href="#">
-					<img src="images/icons/my_header_icon.png" alt="website icon"/>
-				</a>
-			</label>
-			<ul>
-				<li><a id="nav_item_home" class="nav_item_active" href="#top">Home</a></li>
-				<li><a id="nav_item_about" class="nav_item_inactive_transparent" href="#about">About</a></li>
-				<li><a id="nav_item_services" class="nav_item_inactive_transparent" href="#services">Services</a></li>
-				<li><a id="nav_item_portfolio" class="nav_item_inactive_transparent" href="#portfolio">Portfolio</a></li>
-				<li><a id="nav_item_pricing" class="nav_item_inactive_transparent" href="#pricing">Pricing</a></li>
-				<li><a id="nav_item_blog" class="nav_item_inactive_transparent" href="blog.html">Blog</a></li>
-			</ul>
-		</nav>
-
+				<ul id="nav_item_container" class="nav_item_container_transparent">
+					<li><a id="nav_item_home" class="nav_item_active" href="#heroBg">Home</a></li>
+					<li><a id="nav_item_about" class="nav_item_inactive_transparent" href="#about">About</a></li>
+					<li><a id="nav_item_services" class="nav_item_inactive_transparent" href="#services">Services</a></li>
+					<li><a id="nav_item_portfolio" class="nav_item_inactive_transparent" href="#portfolio">Portfolio</a></li>
+					<li><a id="nav_item_pricing" class="nav_item_inactive_transparent" href="#pricing">Pricing</a></li>
+					<li><a id="nav_item_blog" class="nav_item_inactive_transparent" href="blog.html">Blog</a></li>
+				</ul>
+			</nav>
+		
+			<table id="heroLayout">
+				<tr>
+					<td>
+						<div>Hello there, I'm </div> 
+						<div>Rex Anthony</div>
+						<div>Professional Web and App Developer</div>
+						<div>I am a software developer with 6+ years experience. Experienced in software and app development, user interface design, analytics and search engine optimization (SEO).</div>
+					</td>
+					<td>
+						<img src="images/pics/heroImage.png" alt="A picture of myself"/>
+					</td>
+				</tr>
+			</table>
+			<div id="socialMediaHandles">
+				<a href="https://facebook.com/rexthony" target="_blank"><img src="images/icons/facebook_icon.png" alt="facebook icon"/></a>
+				<a href="https://twitter.com/rexthony" target="_blank"><img src="images/icons/twitter_icon.png" alt="twitter icon"/></a>
+				<a href="https://instagram.com/rexthony" target="_blank"><img src="images/icons/instagram_icon.png" alt="instagram icon"/></a>
+				<a href="https://linkedin.com/rexthony" target="_blank"><img src="images/icons/linkedin_icon.png" alt="linkedin icon"/></a>
+			</div>
+		</div>
+		
 		<section id="body">
 			<section id="top">
 				<h1>ONE</h1>

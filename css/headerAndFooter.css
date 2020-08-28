@@ -10,39 +10,36 @@ body{
 	font-size: small;
 	background-color: rgb(247, 249, 246);
 }
-.nav_translucent{
+nav{
 	position: fixed;
+	z-index: 2;
+}
+.nav_translucent{
 	background: white;
 	width: 100%;
 	height: 65px;
+	box-shadow: 10px 10px 10px rgb(30, 30, 30, 0.1);
 	transition: .5s;
 }
 .nav_transparent{
-	position: fixed;
 	background: transparent;
 	width: 100%;
 	height: 65px;
 	transition: .5s;
 }
-#logo{
-	position: relative;
-}
-label a img{
-	position: absolute;
-	top: 0;
-	bottom: 0;
+#logo a img{
 	width: 33px;
 	height: 33px;
-	margin: auto 0px auto 90px;
+	margin: 15px 0px 0px 90px;
 }
-nav ul{
+#nav_item_container{
 	float: right;
 	margin-right: 90px;
 }
 nav ul li{
 	display: inline;
 	line-height: 65px;
-	margin: 0 10px;
+	margin: 0 10 0 0px;
 }
 nav ul li a{
 	font-size: 0.9em;
@@ -65,209 +62,77 @@ nav ul li a:hover{
 	background: #1b9bff;
 	transition: .2s;
 }
-.checkbtn{
+#nav_hamburger{
+	display: none;
 	font-size: 25px;
-	color: black;
 	float: right;
 	margin-right: 20px;
 	cursor: pointer;
-	display: none;
 	padding: 8px;
+}
+.checkbtn_transparent{
+	color: white;
+}
+.checkbtn_translucent{
+	color: black;
 }
 #check{
 	display: none;
 }
-section#body{
-	padding-top: 65px;
-}
-section#body{
-	padding-bottom: 20px;
-}
-footer{
-	background-color: rgb(40, 41, 35);
-	clear: both;
-}
-footer section{
-	padding: 20px 43px 20px 43px;
-}
-footer section section:nth-child(1){
-	float: left;
-	width: 60%;
-}
-footer section section:nth-child(2){
-	float: left;
-	width: 40%;
-}
-footer section section header{
-	margin-bottom: 15px;
-	font-size: 1.5em;
-	color: white;
-	letter-spacing: 0.1em;
-}
-footer section section p{
-	line-height: 1.5em;
-	margin-bottom: 15px;
-	font-size: 1em;
-	color: gray;
-	width: 80%;
-}
-footer section section span a{
-	margin-right: 20px;
-}
-footer section section span a img{
-	width: 30px;
-	height: 30px;
-}
-footer section section table{
-	color: gray;
-}
-footer section section table tr td{
-	vertical-align: top;
-}
-footer section section table tr td img{
-	width: 20px;
-	height: 20px;
-	margin-right: 16px;
-}
-footer section section table tr td{
-	padding-bottom: 10px;
-}
-footer#base{
-	clear: left;
-	background-color: rgb(30, 31, 25);
-	color: #a7aca1;
-	padding: 23px 85px;
-	font-size: 1em;
-}
-@media (max-width: 1250px){
-	label.logo{
-		margin-left: 35px;
+@media (max-width: 1150px){
+	#logo a img{
+		margin-left: 45px;
 	}
 	nav ul{
 		float: right;
 		margin-right: 40px;
 	}
+}
+@media (max-width: 750px){
 	nav ul li{
-		display: inline;
-		line-height: 90px;
+		line-height: 65px;
 		margin: 0 5px;
 	}
 }
-@media (max-width: 1100px){
-	nav{
-		height: 80px;
-	}
-	label.logo{
-		font-size: 1.5em;
-		line-height: 78px;
-		margin-left: 20px;
-	}
-	label.logo a img{
-		width: 43px;
-		height: 43px;
-	}
-	nav ul{
-		margin-right: 10px;
-	}
-	nav ul li{
-		line-height: 74px;
-		margin: 0 2px;
-	}
-	nav ul li a{
-		font-size: 1em;
-		padding: 4px 10px;
-		text-transform: uppercase;
-	}
-	section#body{
-		padding-top: 80px;
-	}
-	footer section{
-		padding: 20px 23px 20px 23px;
-	}
-	footer#base{
-		padding: 23px 43px;
-		margin: 0px auto;
-	}
-}
-@media (max-width: 950px){
-	label.logo{
+@media (max-width: 670px){
+	#nav_hamburger{
 		display: block;
-	}
-	label a img{
-		width: 32px;
-		height: 32px;
-		vertical-align: middle;
-		margin-right: 5px;
-	}
-	#check{
-		display: none;
-	}
-	.checkbtn{
-		display: block;
-		margin-top: 16px;
+		margin-top: 8px;
 	}
 	nav ul li{
 		display: block;
-		margin: 30px 0;
-		line-height: 40px;
+		margin: 10px 10px;
+		padding: 0px 10px;
+		line-height: 50px;
 	}
 	nav ul li a{
 		font-size: 20px;
-		padding: 15px 50px;
-		border-radius: 30px;
+		display: block;
 	}
-	nav ul{
-		position: fixed;
+	#nav_item_container{
+		display: none;
 		width: 100%;
-		height: 100vh;
-		padding-bottom: 70px; 
-		background: white;
-		top: 80px;
-		left: -100%;
-		text-align: center;
+		margin-top: 10px;
+		margin-right: 0px;
 		transition: all .5s;
 		overflow: auto;
 	}
-	nav ul li a:hover,nav ul li a.active{
-		background: none;
-		color: orange;
+	.nav_item_container_transparent{
+		background-color: transparent;
+	}
+	.nav_item_container_translucent{
+		background-color: white;
+	}
+	nav ul li a:hover, nav ul li a.nav_item_active{
+		color: blue;
+		background: transparent;
+	}
+	nav ul li:hover{
+		background: rgba(130, 130, 130, 0.5);
+		transition: .2s;
+		cursor: pointer;
 	}
 	#check:checked ~ ul{
-		left: 0;
-	}
-}
-@media (max-width: 900px){
-	footer section{
-		padding: 20px 13px 20px 13px;
-	}
-	footer section section{
-		clear: left;
-		padding: 20px 13px 20px 13px;
-	}
-	footer section section:nth-child(1){
-		float: left;
-		width: 100%;
-	}
-	footer section section:nth-child(2){
-		float: left;
-		width: 100%;
-	}
-	footer#base{
-		padding: 23px 30px;
-		margin: 0px auto;
-	}
-}
-
-@media (max-width: 600px){
-	label.logo a img{
-		display: none;
-	}
-	label.logo{
-		font-size: 1.4em;
-	}
-	footer section section header{
-		margin-bottom: 15px;
-		font-size: 1.5em;
-		letter-spacing: 0.05em;
+		display: block;
 	}
 }
