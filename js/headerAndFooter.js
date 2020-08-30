@@ -1,7 +1,25 @@
 window.onload = function(){
 	window.onscroll = scrollListener;
+	window.onclick = windowClickListener;
 }
 
+function windowClickListener(){
+	var checkbox = getCheckbox();
+	checkbox.onchange = function(event){
+		var element = event.target;
+		if(element.id == "check"){
+			if(element.checked){
+				isChecked = true;
+			}else{
+				isChecked = false;
+			}
+		}
+	};
+	if(isChecked){
+		isChecked = false;
+		checkbox.checked = false;
+	}
+}
 function scrollListener(){
 	notifyNavBarListener();
 }
@@ -27,6 +45,10 @@ function notifyNavBarListener(){
 			inactiveNavItems[i].className = "nav_item_inactive_transparent";
 		}
 	}
+}
+
+function getCheckbox(){
+	return document.getElementById("check");
 }
 
 function getNavBar(){
