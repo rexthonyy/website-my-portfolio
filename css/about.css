@@ -1,0 +1,69 @@
+#about{
+	padding: 100px 100px;
+}
+#about2{
+	display: none;
+}
+#about table {
+	width: 100%;
+}
+#about table tr td{
+	width: 50%;
+	text-align: center;
+}
+#aboutImage{
+	width: 500px;
+	content: url("../images/pics/heroImage.png");
+}
+#about table tr td:nth-child(2){
+	text-align: left;
+}
+
+#about table tr td h1{
+	color: rgb(58, 91, 158);
+	font-size: 1.6em;
+	margin-top: 50px;
+}
+#about table tr td h2{
+	color: rgb(32, 32, 32);
+	font-size: 2.1em;
+	margin-top: 20px;
+}
+#divider{
+	width: 80px;
+	height: 3px;
+	background-color: rgb(58, 91, 158);
+	margin-top: 20px;
+}
+#about table tr td p{
+	margin-top: 10px;
+	font-size: 1.2em;
+	line-height: 1.6em;
+	color: rgb(120, 120, 120);
+}
+#about table tr td h3{
+	margin-top: 20px;
+	margin-bottom: -8px;
+	font-size: 1.1em;
+	color: black;
+	font-weight: normal;
+}
+#about table tr td h4{
+	float: right;
+	font-weight: normal;
+	font-size: 1.1em;
+}
+.skill_bar_background{
+	width: 100%;
+	height: 10px;
+	background-color: rgb(200, 200, 200);
+	border-radius: 4px;
+	clear: right;
+	margin-top: 20px;
+}
+.skill_bar_progress{
+	width: 50%;
+	height: 10px;
+	background-color: rgb(58, 91, 158);
+	border-radius: 4px;
+}

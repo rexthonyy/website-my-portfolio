@@ -1,6 +1,7 @@
 window.onload = function(){
 	window.onscroll = scrollListener;
 	window.onclick = windowClickListener;
+	getNavHamburger().onclick = windowClickListener;
 }
 
 function windowClickListener(){
@@ -18,6 +19,9 @@ function windowClickListener(){
 	if(isChecked){
 		isChecked = false;
 		checkbox.checked = false;
+	}else{
+		isChecked = true;
+		checkbox.checked = true;
 	}
 }
 function scrollListener(){
