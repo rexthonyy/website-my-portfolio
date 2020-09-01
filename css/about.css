@@ -63,7 +63,7 @@
 	margin-top: 20px;
 }
 .skill_bar_progress{
-	width: 50%;
+	/*width: 25%;*/
 	height: 10px;
 	background-color: rgb(58, 91, 158);
 	border-radius: 4px;
