@@ -4,17 +4,18 @@
 	<head>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<title>Rex's Website</title>
+		<title>Inbox - Rex</title>
 		<link type="text/css" rel="stylesheet" href="css/headerAndFooter.css"/>
 		<link type="text/css" rel="stylesheet" href="css/hero.css"/>
 		<link type="text/css" rel="stylesheet" href="css/about.css"/>
 		<script type="text/javascript" src="js/headerAndFooter.js"></script>
+		<script type="text/javascript" src="js/about.js"></script>
 		<link type="image/x-icon" rel="icon" href="images/icons/my_header_icon.png"/>
 		<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 	</head>
 
 	<body>
-		<div id="heroBg">
+		<section id="heroBg">
 			<nav id="nav" class="nav_transparent">
 				<input type="checkbox" id="check">
 					<label for="check" id="nav_hamburger" class="checkbtn_transparent">
@@ -27,7 +28,7 @@
 				</label>
 				<ul id="nav_item_container" class="nav_item_container_transparent">
 					<li><a id="nav_item_home" class="nav_item_active" href="#heroBg">Home</a></li>
-					<li><a id="nav_item_about" class="nav_item_inactive_transparent" href="#about">About</a></li>
+					<li><a id="nav_item_about" class="nav_item_inactive_transparent" href="#abt">About</a></li>
 					<li><a id="nav_item_services" class="nav_item_inactive_transparent" href="#services">Services</a></li>
 					<li><a id="nav_item_portfolio" class="nav_item_inactive_transparent" href="#portfolio">Portfolio</a></li>
 					<li><a id="nav_item_pricing" class="nav_item_inactive_transparent" href="#pricing">Pricing</a></li>
@@ -67,65 +68,89 @@
 				</div>
 				<img id="heroImage2" src="images/pics/heroImage.png" alt="A picture of myself"/>
 			</div>
-		</div>
+		</section>
 		
-		<section id="about">
-			<table>
-				<tr>
-					<td>
-						<img id="aboutImage" src="images/pics/heroImage.png" alt="A picture of myself"/>
-					</td>
-					<td>
-						<h1>About</h1>
-						<h2>My Expertise</h2>
-						<div id="divider"></div>
-						<p>
-							In various capacities as a software developer working on my own as part of a team, I have been exposed to various aspects of software and app development. From the idea formulation, product design, development, testing and final deployment.
-						</p>
-						
-						<h3>UI/UX Design</h3>
-						<h4>85%</h4>
-						<div class="skill_bar_background">
-							<div class="skill_bar_progress"></div>
-						</div>
+		<section id="abt">
+			<div id="about">
+				<table>
+					<tr>
+						<td>
+							<img id="aboutImage" src="images/pics/heroImage.png" alt="A picture of myself"/>
+						</td>
+						<td>
+							<h1>About</h1>
+							<h2>My Expertise</h2>
+							<div id="divider"></div>
+							<p>
+								In various capacities as a software developer working on my own and 
+								as part of a team, I have been exposed to various aspects of software and app development. From the idea formulation, product design, development, testing and final deployment.
+							</p>
+							
+							<div id="skills">
+								<h3>UI/UX Design</h3>
+								<h4>85%</h4>
+								<div class="skill_bar_background">
+									<div class="skill_bar_progress"></div>
+								</div>
 
-						<h3>Web Design</h3>
-						<h4>85%</h4>
-						<div class="skill_bar_background">
-							<div class="skill_bar_progress"></div>
-						</div>
+								<h3>Web Design</h3>
+								<h4>85%</h4>
+								<div class="skill_bar_background">
+									<div class="skill_bar_progress"></div>
+								</div>
 
-						<h3>HTML/CSS</h3>
-						<h4>85%</h4>
-						<div class="skill_bar_background">
-							<div class="skill_bar_progress"></div>
-						</div>
+								<h3>App development</h3>
+								<h4>85%</h4>
+								<div class="skill_bar_background">
+									<div class="skill_bar_progress"></div>
+								</div>
 
-						<h3>Java</h3>
-						<h4>85%</h4>
-						<div class="skill_bar_background">
-							<div class="skill_bar_progress"></div>
-						</div>
+								<h3>SEO</h3>
+								<h4>85%</h4>
+								<div class="skill_bar_background">
+									<div class="skill_bar_progress"></div>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="about2">
+				<img id="heroImage2" src="images/pics/heroImage.png" alt="A picture of myself"/>
+				<h1>About</h1>
+				<h2>My Expertise</h2>
+				<div id="divider2"></div>
+				<p>
+					In various capacities as a software developer working on my own as part of a team, I have been exposed to various aspects of software and app development. From the idea formulation, product design, development, testing and final deployment.
+				</p>
+				<div id="skills2">
+					<h3>UI/UX Design</h3>
+					<h4>85%</h4>
+					<div class="skill_bar_background">
+						<div class="skill_bar_progress"></div>
+					</div>
 
-						<h3>PHP</h3>
-						<h4>85%</h4>
-						<div class="skill_bar_background">
-							<div class="skill_bar_progress"></div>
-						</div>
+					<h3>Web Design</h3>
+					<h4>85%</h4>
+					<div class="skill_bar_background">
+						<div class="skill_bar_progress"></div>
+					</div>
 
-						<h3>SQL</h3>
-						<h4>85%</h4>
-						<div class="skill_bar_background">
-							<div class="skill_bar_progress"></div>
-						</div>
-					</td>
-				</tr>
-			</table>
+					<h3>App development</h3>
+					<h4>85%</h4>
+					<div class="skill_bar_background">
+						<div class="skill_bar_progress"></div>
+					</div>
+
+					<h3>SEO</h3>
+					<h4>85%</h4>
+					<div class="skill_bar_background">
+						<div class="skill_bar_progress"></div>
+					</div>
+				</div>
+			</div>
 		</section>
 
-		<section id="about2">
-			About2
-		</section>
 		<section id="top">
 			<h1>ONE</h1>
 
