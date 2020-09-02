@@ -136,7 +136,7 @@ function loadSkills(){
 	skills.push(new Skill("UI/UX Design", 83));
 	skills.push(new Skill("Web Design", 92));
 	skills.push(new Skill("App development", 87));
-	skills.push(new Skill("SEO", 32));
+	skills.push(new Skill("SEO", 92));
 
 	loadSkillLayout(skills);
 }

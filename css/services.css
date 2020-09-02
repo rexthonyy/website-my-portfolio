@@ -1,0 +1,131 @@
+#services{
+	padding: 100px 50px;
+	text-align: center;
+	background-color: rgb(240, 240, 240);
+}
+#services2{
+	display: none;
+}
+#services3{
+	display: none;
+}
+#services h1{
+	color: rgb(58, 91, 158);
+	font-size: 1.6em;
+}
+#services h2{
+	color: rgb(32, 32, 32);
+	font-size: 2.1em;
+	margin-top: 20px;
+}
+#divider3{
+	width: 80px;
+	height: 3px;
+	background-color: rgb(58, 91, 158);
+	margin: 20px auto 0px auto;
+}
+#services1 table{
+	margin: 30px 0px;
+	width: 100%;
+	border-spacing: 30px 30px;
+	text-align: left;
+}
+#services1 table tr td{
+	width: 33%;
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: 10px 10px 10px rgb(20, 20, 20, 0.1);
+	padding: 30px;
+}
+#services1 table tr td h1{
+	margin-top: 15px;
+	color: black;
+	font-size: 1.5em;
+}
+#services1 table tr td p{
+	margin-top: 15px;
+	font-size: 1.2em;
+	line-height: 1.6em;
+	color: rgb(120, 120, 120);
+}
+@media (max-width: 1200px){
+	#services{
+		padding: 100px 20px;
+	}
+}
+
+@media (max-width: 1000px){
+	#services{
+		padding: 50px 0px;
+	}
+	#services1{
+		display: none;
+	}
+	#services2{
+		display: block;
+	}
+	#services3{
+		display: none;
+	}
+	#services2 table{
+		margin: 30px 0px;
+		width: 100%;
+		border-spacing: 30px 30px;
+		text-align: left;
+	}
+	#services2 table tr td{
+		width: 50%;
+		background-color: white;
+		border-radius: 10px;
+		box-shadow: 10px 10px 10px rgb(20, 20, 20, 0.1);
+		padding: 30px;
+	}
+	#services2 table tr td h1{
+		margin-top: 15px;
+		color: black;
+		font-size: 1.5em;
+	}
+	#services2 table tr td p{
+		margin-top: 15px;
+		font-size: 1.2em;
+		line-height: 1.6em;
+		color: rgb(120, 120, 120);
+	}
+}
+@media (max-width: 600px){
+	#services{
+		padding: 50px 0px;
+	}
+	#services1{
+		display: none;
+	}
+	#services2{
+		display: none;
+	}
+	#services3{
+		display: block;
+	}
+	#services3 table{
+		margin: 30px 0px;
+		width: 100%;
+		border-spacing: 30px 30px;
+		text-align: left;
+	}
+	#services3 table tr td{
+		background-color: white;
+		border-radius: 10px;
+		box-shadow: 10px 10px 10px rgb(20, 20, 20, 0.1);
+		padding: 30px;
+	}
+	#services3 table tr td h1{
+		margin-top: 15px;
+		color: black;
+		font-size: 1.5em;
+	}
+	#services3 table tr td p{
+		margin-top: 15px;
+		font-size: 1.2em;
+		line-height: 1.6em;
+		color: rgb(120, 120, 120);
+	}
+}
