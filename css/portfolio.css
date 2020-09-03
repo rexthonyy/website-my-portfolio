@@ -1,0 +1,205 @@
+#portfolio{
+	padding: 100px 58px;
+	background-color: white;
+}
+#portfolio2{
+	display: none;
+}
+#portfolio3{
+	display: none;
+}
+#portfolio h1{
+	color: rgb(58, 91, 158);
+	font-size: 1.6em;
+	margin-left: 33px;
+}
+#portfolio h2{
+	color: rgb(32, 32, 32);
+	font-size: 2.1em;
+	margin-top: 20px;
+	margin-left: 33px;
+}
+#divider4{
+	width: 80px;
+	height: 3px;
+	background-color: rgb(58, 91, 158);
+	margin-top: 20px;
+	margin-left: 33px;
+}
+#portfolio1{
+	padding: 0px -133px;
+}
+#portfolio1 table{
+	width: 100%;
+	margin: 50px auto;
+	border-spacing: 30px 0px;
+}
+#portfolio1 table tr td{
+	text-align: left;
+	width: 33%;
+}
+#portfolio1 table tr td figure{
+	width: 100%;
+	border: 1px solid rgb(222, 222, 222);
+	height: 340px;
+	border-radius: 10px;
+}
+#portfolio1 table tr td:nth-child(1) figure{
+	background-image: url("../images/pics/mycolisTechnology.png");
+	background-repeat: no-repeat;
+	background-color: rgb(0, 132, 200);
+}
+#portfolio1 table tr td:nth-child(2) figure{
+	background-image: url("../images/pics/qrauthenticator.png");
+}
+#portfolio1 table tr td:nth-child(3) figure{
+	background-image: url("../images/icons/qrauthenticator_icon.png");
+	background-position: center;
+	background-repeat: no-repeat;
+}
+#portfolio1 table tr td figcaption{
+	padding: 20px 0px;
+}
+#portfolio1 table tr td figcaption h3{
+	font-size: 1.4em;
+}
+#portfolio1 table tr td figcaption h3 a{
+	color: black;
+}
+#portfolio1 table tr td figcaption h3 a:hover{
+	color: rgb(0, 132, 200);
+}
+
+#portfolio1 table tr td figcaption p{
+	margin-top: 10px;
+	font-size: 1.2em;
+	color: rgb(132, 132, 132);
+}
+
+@media (max-width: 1200px){
+	#portfolio{
+		padding: 50px 30px;
+	}
+	#portfolio1{
+		display: none;
+	}
+	#portfolio2{
+		display: block;
+	}
+	#portfolio2 table{
+		width: 100%;
+		margin: 30px -30px;
+		border-spacing: 30px 30px;
+	}
+	#portfolio2 table tr td{
+		text-align: left;
+		width: 33%;
+	}
+	#portfolio2 table tr td figure{
+		width: 100%;
+		border: 1px solid rgb(222, 222, 222);
+		height: 340px;
+		border-radius: 10px;
+	}
+	#portfolio2 table tr:nth-child(1) td:nth-child(1) figure{
+		background-image: url("../images/pics/mycolisTechnology.png");
+		background-repeat: no-repeat;
+		background-color: rgb(0, 132, 200);
+	}
+	#portfolio2 table tr:nth-child(1) td:nth-child(2) figure{
+		background-image: url("../images/pics/qrauthenticator.png");
+	}
+	#portfolio2 table tr:nth-child(2) td:nth-child(1) figure{
+		background-image: url("../images/icons/qrauthenticator_icon.png");
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+	#portfolio2 table tr td figcaption{
+		padding: 20px 0px;
+	}
+	#portfolio2 table tr td figcaption h3{
+		font-size: 1.4em;
+	}
+	#portfolio2 table tr td figcaption h3 a{
+		color: black;
+	}
+	#portfolio2 table tr td figcaption h3 a:hover{
+		color: rgb(0, 132, 200);
+	}
+	#portfolio2 table tr td figcaption p{
+		margin-top: 10px;
+		font-size: 1.2em;
+		color: rgb(132, 132, 132);
+	}
+}
+
+@media (max-width: 900px){
+	#portfolio{
+		padding: 50px 30px 20px 30px;
+	}
+	#portfolio h1{
+		margin-left: 0px;
+	}
+	#portfolio h2{
+		margin-left: 0px;
+	}
+	#divider4{
+		margin-left: 0px;
+	}
+	#portfolio1{
+		display: none;
+	}
+	#portfolio2{
+		display: none;
+	}
+	#portfolio3{
+		display: block;
+	}
+	#portfolio3 table{
+		width: 100%;
+		margin: 30px 0px;
+		border-spacing: 0px 30px;
+	}
+	#portfolio3 table tr td{
+		text-align: left;
+		width: 33%;
+	}
+	#portfolio3 table tr td figure{
+		width: 100%;
+		border: 1px solid rgb(222, 222, 222);
+		height: 340px;
+		border-radius: 10px;
+	}
+	#portfolio3 table tr:nth-child(1) td figure{
+		background-image: url("../images/pics/mycolisTechnology.png");
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+	#portfolio3 table tr:nth-child(2) td figure{
+		background-image: url("../images/pics/qrauthenticator.png");
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+	#portfolio3 table tr:nth-child(3) td figure{
+		background-image: url("../images/icons/qrauthenticator_icon.png");
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+	#portfolio3 table tr td figcaption{
+		padding: 20px 0px;
+	}
+	#portfolio3 table tr td figcaption h3{
+		font-size: 1.4em;
+	}
+	#portfolio3 table tr td figcaption h3 a{
+		color: black;
+	}
+	#portfolio3 table tr td figcaption h3 a:hover{
+		color: rgb(0, 132, 200);
+	}
+	#portfolio3 table tr td figcaption p{
+		margin-top: 10px;
+		font-size: 1.2em;
+		color: rgb(132, 132, 132);
+	}
+}

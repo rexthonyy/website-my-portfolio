@@ -52,7 +52,7 @@
 	content:url("../images/icons/instagram_icon_hover.png");
 }
 #socialMediaHandles a:nth-child(4):hover img{
-	content:url("../images/icons/linkedin_icon_hover.png");
+	content:url("../images/icons/github_icon_hover.png");
 }
 #heroLayout2{
 	display: none;
@@ -181,7 +181,7 @@
 		content:url("../images/icons/instagram_icon_hover.png");
 	}
 	#socialMediaHandles2 a:nth-child(4):hover img{
-		content:url("../images/icons/linkedin_icon_hover.png");
+		content:url("../images/icons/github_icon_hover.png");
 	}
 }	
 
