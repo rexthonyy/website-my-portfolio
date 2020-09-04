@@ -56,8 +56,9 @@ function notifyNavBarListener(){
 
 function notifyNavItemListener(){
 	var index = undefined;
-	for(var i = 0; i < getSection().length; i++){
-		var section = getSection()[i].getBoundingClientRect();
+	var sections = getSection();
+	for(var i = 0; i < sections.length; i++){
+		var section = sections[i].getBoundingClientRect();
 		if(section.top > 0){
 			index = i;
 			break;

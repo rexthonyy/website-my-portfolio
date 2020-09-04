@@ -1,0 +1,23 @@
+#blogHeroBg{
+	height: 200px;
+	background-color: rgb(27, 27, 27);
+	background-repeat: no-repeat;
+	background-size: cover;
+	text-align: center;
+}
+#blogHeroBg p{
+	line-height: 200px;
+	padding-top: 32px;
+	font-size: 2em;
+	color: white;
+}
+@media (max-width: 1000px){
+	#blogHeroBg{
+		height: 190px;
+	}
+	#blogHeroBg p{
+		line-height: 190px;
+		padding-top: 20px;
+		font-size: 2em;
+	}
+}
