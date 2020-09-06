@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>Dashboard</title>
+		<link type="text/css" rel="stylesheet" href="css/dashboard.css"/>
+		<script type="text/javascript" src="js/dashboard.js"></script>
+		<link type="image/x-icon" rel="icon" href="images/icons/my_header_icon.png"/>
+	</head>
+
+	<body>
+		<!--The top navigation-->
+		<nav>
+			<div id="searchNav">
+				<table>
+					<tr>
+						<td>
+							<!-- Create a new post button -->
+							<a href="#"><button id="newPostBtn" class="btnNewPost">New post</button></a> 
+						</td>
+						<td>
+							<div id="searchContainer" class="searchContainerNoFocus">
+								<!-- Search icon -->
+								<button ><img id="searchBtn" src="images/icons/ic_search.png"  width="24px" height="24px"/></button>
+								<!-- The search bar -->
+								<input id="searchBar" type="text" placeholder="Search posts"/>
+								<button ><img id="clearSearchBtn"src="images/icons/ic_clear.png" width="24px" height="24px"/></button>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="selectionNav">
+				selection actions
+			</div>
+		</nav>
+		
+		<section id="body">
+			<table>
+				<tr>
+					<td>
+						<select id="displayPostDropDown">
+							<option value="all">All (0)</option>
+							<option value="published">Published (0)</option>
+							<option value="drafts">Drafts (0)</option>
+						</select>
+					</td>
+					<td>
+						<input id="selectAllCheckbox" type="checkbox"/>
+					</td>
+				</tr>
+			</table>
+
+			<div id="postContainer">
+				<table>
+					<tr>
+						<td>
+							<input class="postCheckbox" type="checkbox"/>
+						</td>
+						<td>
+							<table>
+								<tr>
+									<td>How to implement Google play in app billing</td>
+									<td>
+										<span>
+											<span>
+												<button><img class="publishBtn postActionBtn" src="images/icons/ic_publish.png"  width="24px" height="24px"/></button>
+												<button><img class="deleteBtn postActionBtn" src="images/icons/ic_delete.png"  width="24px" height="24px"/></button>
+												<button><img class="previewBtn postActionBtn" src="images/icons/ic_eye.png"  width="24px" height="24px"/></button>
+											</span>
+										</span>
+									</td>
+								</tr>
+								<tr>
+									<td><span style="color:orange;">Draft</span> &#183; Sept 30</td>
+									<td><span>Something is here</span></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				
+			</div>
+		</section>
+	</body>
+</html>

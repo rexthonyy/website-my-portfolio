@@ -1,29 +1,54 @@
-window.onload = function(){
+function loadHeaderAndFooterJS(){
 	window.onscroll = scrollListener;
-	window.onclick = windowClickListener;
-	getNavHamburger().onclick = windowClickListener;
-	loadSkills();
-}
 
-function windowClickListener(){
+	isClickedHamburger = false;
+	isChecked = false;
+	checkboxEffect = null;
+
 	var checkbox = getCheckbox();
 	checkbox.onchange = function(event){
+		// alert("checkbox");
 		var element = event.target;
 		if(element.id == "check"){
-			if(element.checked){
-				isChecked = true;
-			}else{
-				isChecked = false;
-			}
+			checkboxEffect();
+			isClickedHamburger = false;
 		}
 	};
+
+	window.onclick = windowClickListener;
+	getNavHamburger().onclick = navHamburgerListener;
+}
+function windowClickListener(){
+	// alert("window");
+	var checkbox = getCheckbox();
 	if(isChecked){
-		isChecked = false;
-		checkbox.checked = false;
-	}else{
-		isChecked = true;
-		checkbox.checked = true;
+		if(isClickedHamburger){
+			checkboxEffect = closeNav;
+		}else{
+			closeNav();
+		}
 	}
+}
+
+function navHamburgerListener(){
+	// alert("hamburger");
+	isClickedHamburger = true;
+	var checkbox = getCheckbox();
+	if(isChecked){
+		checkboxEffect = closeNav;
+	}else{
+		checkboxEffect = openNav;
+	}
+}
+
+function openNav(){
+	getCheckbox().checked = true;
+	isChecked = true;
+}
+
+function closeNav(){
+	getCheckbox().checked = false;
+	isChecked = false;
 }
 
 function scrollListener(){
@@ -130,40 +155,4 @@ function getInactiveNavItems(){
 
 function getNavHamburger(){
 	return document.getElementById("nav_hamburger");
-}
-
-function loadSkills(){
-	var skills = [];
-	skills.push(new Skill("UI/UX Design", 83));
-	skills.push(new Skill("Web Design", 92));
-	skills.push(new Skill("App development", 87));
-	skills.push(new Skill("SEO", 92));
-
-	loadSkillLayout(skills);
-}
-
-function loadSkillLayout(skills){
-	var skillElements = getSkillElements();
-	for(var i = 0; i < skillElements.length; i++){
-		var innerHTML = "";
-		var skillElm = skillElements[i];
-		for(var j = 0; j < skills.length; j++){
-			var skill = skills[j];
-			
-			innerHTML += "<h3>"+skill.name+"</h3><h4>"+skill.percent+"%</h4><div class=\"skill_bar_background\"><div style=\"width:"+skill.percent+"%\" class=\"skill_bar_progress\"></div></div>";
-		}
-		skillElm.innerHTML = innerHTML;
-	}
-}
-
-function Skill(name, percent){
-	this.name = name;
-	this.percent = percent;
-}
-
-function getSkillElements(){
-	var skillElements = [];
-	skillElements.push(document.getElementById("skills"));
-	skillElements.push(document.getElementById("skills2"));
-	return skillElements;
 }

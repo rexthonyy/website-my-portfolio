@@ -12,13 +12,13 @@
 		<link type="text/css" rel="stylesheet" href="css/about.css"/>
 		<link type="text/css" rel="stylesheet" href="css/services.css"/>
 		<link type="text/css" rel="stylesheet" href="css/portfolio.css"/>
-		<script type="text/javascript" src="js/headerAndFooter.js"></script>
 		<script type="text/javascript" src="js/about.js"></script>
+		<script type="text/javascript" src="js/headerAndFooter.js"></script>
 		<link type="image/x-icon" rel="icon" href="images/icons/my_header_icon.png"/>
 		<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 	</head>
 
-	<body>
+	<body onload="loadHeaderAndFooterJS(); loadAboutJS();">
 		<section id="heroBg">
 			<nav id="nav" class="nav_transparent">
 				<input type="checkbox" id="check">
@@ -476,7 +476,7 @@
 				</ul>
 			</div>
 			<p>
-				This website was developed by Myself
+				This website was developed by myself
 			</p>
 		</footer>
 	</body>

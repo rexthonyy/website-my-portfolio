@@ -1,0 +1,167 @@
+*{
+	padding: 0;
+	margin: 0;
+	outline: none;
+	text-decoration: none;
+	list-style: none;
+	box-sizing: border-box;
+}
+body{
+	font-family: Verdana, Geneva, Arial, sans-serif;
+	font-size: small;
+	background-color: white;
+}
+nav{
+	position: fixed;
+	width: 100%;
+	height: 65px;
+	display: flex;
+	align-items: center;
+	border-bottom: 1px solid rgb(230, 230, 230);
+	background-color: white;
+}
+#searchNav{
+	width: 100%;
+}
+#searchNav table{
+	width: 72.5%;
+	margin: 0px auto;
+}
+#selectionNav{
+	display: none;
+}
+#searchNav table tr td:first-child{
+	width: 1px;
+	white-space: nowrap;
+}
+#searchNav table tr td a button{
+	color: rgb(58, 91, 158);
+	font-size: 1.3em;
+	padding: 10px 14px;
+	font-weight: bold;
+	background-color: white;
+	border: 1px solid rgb(58, 91, 158);
+	border-radius: 20px;
+}
+#searchNav table tr td a button:hover{
+	cursor: pointer;
+	color: white;
+	box-shadow: 5px 5px 5px rgb(30, 30, 30, 0.1);
+	background-color: rgb(58, 91, 158);
+	transition: .3s;
+}
+
+#searchNav table tr td div{
+	display: flex;
+	align-items: center;
+	float: right;
+	padding: 3px 5px;
+	width: 90%;
+	border-radius: 15px;
+	border: 0px;
+}
+.searchContainerNoFocus{
+	background: rgb(240, 240, 240);
+	transition: .4s;
+}
+.searchContainerFocus{
+	box-shadow: 0px 3px 5px rgb(30, 30, 30, 0.1);
+	background: white;
+	transition: .4s;
+}
+#searchNav table tr td div button{
+	border: 0px solid black;
+	border-radius: 24px;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	background-color: transparent;
+}
+#searchNav table tr td div button:hover, #searchNav table tr td div button:focus{
+	outline: none;
+	background-color: rgb(230, 230, 230);
+	cursor: pointer;
+}
+#searchNav table tr td div input{
+	width: 100%;
+	font-size: 1.3em;
+	padding: 10px 14px;
+	border: 0px;
+	background-color: transparent;
+}
+#body{
+	width: 72.5%;
+	margin: 0px auto;
+	padding-top: 65px;
+}
+#body table{
+	width: 100%;
+	margin-top: 30px;
+}
+#body table tr td:first-child{
+	width: 1px;
+	white-space: nowrap;
+}
+#body table tr td select{
+	font-size: 1.3em;
+	color: rgb(90, 90, 90);
+	padding: 12px;
+	border: 1px solid transparent;
+	background: white;
+	border-radius: 10px;
+}
+#body table tr td select:hover{
+	cursor: pointer;
+}
+#body table tr td input{
+	float: right;
+	vertical-align: middle;
+	width: 18px;
+	height: 18px;
+	cursor: pointer;
+}
+#postContainer{
+	margin-top: 30px;
+}
+#postContainer table{
+	border: 1px solid rgb(180, 180, 180);
+	border-radius: 10px;
+	border-spacing: 25px 15px;
+}
+#postContainer table:hover{
+	cursor: pointer;
+	border: 0px;
+	box-shadow: 0px 1px 5px rgb(25, 25, 25, 0.4);
+	transition: .3s;
+}
+#postContainer table tr td{
+	/*border: 1px solid black;*/
+}
+#postCheckbox{
+	visibility: visible;
+}
+#postContainer table tr td table{
+	border: 0px;
+	margin: 0px;
+	border-spacing: 0px;
+}
+#postContainer table tr td table:hover{
+	box-shadow: none;
+}
+#postContainer table tr td table tr:first-child td{
+	font-size: 1.15em;
+	color: rgb(90, 90, 90);
+	font-weight: bold;
+	padding: 8px 0px;
+}
+#postContainer table tr td table tr:last-child td{
+	color: rgb(100, 100, 100);
+	font-size: 1.1em;
+	padding: 8px 0px;
+}
+#postContainer table tr td table tr td:last-child{
+	width: 1px;
+}
+#postContainer table tr td table tr td:last-child span{
+	float: right;
+}
