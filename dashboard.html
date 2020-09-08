@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<title>Dashboard</title>
 		<link type="text/css" rel="stylesheet" href="css/dashboard.css"/>
+		<link type="text/css" rel="stylesheet" href="css/dialog.css"/>
 		<script type="text/javascript" src="js/dashboard.js"></script>
 		<link type="image/x-icon" rel="icon" href="images/icons/my_header_icon.png"/>
 	</head>
@@ -57,9 +58,9 @@
 				<tr>
 					<td>
 						<select id="displayPostDropDown">
-							<option value="all">All (0)</option>
-							<option value="published">Published (0)</option>
-							<option value="drafts">Drafts (0)</option>
+							<option id="allFilter" value="all">All (0)</option>
+							<option id="publishedFilter" value="published">Published (0)</option>
+							<option id="draftsFilter" value="drafts">Drafts (0)</option>
 						</select>
 					</td>
 					<td>
@@ -430,5 +431,24 @@
 				</table>		
 			</div>
 		</section>
+		<!--The modal background-->
+		<div id="modalBackground">
+			<div class="dialog" id="progressBarModal">
+				<img id="progressBarImage" src="images/gifs/loading_bar.gif"/>
+			</div>
+
+			<div class="dialog" id="loginModal">
+				<h1>Please Login to your dashboard</h1>
+				<div>
+					<input id="loginPasswordInput" type="Password" placeholder="Password"/>
+				</div>
+				<div class="inputError" id="loginPasswordInputError">
+					<p></p>
+				</div>
+				<div>
+					<button id="loginBtn">Login</button>
+				</div>
+			</div>
+		</div>	
 	</body>
 </html>

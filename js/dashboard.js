@@ -1,8 +1,10 @@
 window.onload = function(){
 	setEventListeners();
+	sendDashboardAccessRequestToServers();
 }
 
 function setEventListeners(){
+	setLoginButtonClickListener();
 	setCloseSelectionClickListener();
 	setPublishSelectedButtonClickListener();
 	setUnpublishSelectedButtonClickListener();
@@ -24,29 +26,55 @@ function setEventListeners(){
 	setPostClickListener();
 }
 
+function sendDashboardAccessRequestToServers(){
+	//start Ajax request
+	ajaxRequest = new AjaxRequest();
+	ajaxRequest.initialize();
+	ajaxRequest.send("GET", "loginStatus.req.php", ajaxDashboardAccessResponseHandler);
+}
+
+function sendLoginRequestToServer(password){
+	//start Ajax request
+	let postData = "password=" + escape(password);
+	ajaxRequest = new AjaxRequest();
+	ajaxRequest.initialize();
+	ajaxRequest.send("POST", "passwordValidation.req.php", ajaxLoginRequestResponseHandler, "application/x-www-form-urlencoded; charset=UTF-8", postData);
+}
+
+function sendRetrieveDataRequestToServer(){
+	ajaxRequest = new AjaxRequest();
+	ajaxRequest.initialize();
+	ajaxRequest.send("GET", "getPosts.req.php", ajaxRetrieveDataResponseHandler);
+}
+
+function setLoginButtonClickListener(){
+	let loginButton = getLoginButton();
+	loginButton.onclick = clickListener;
+}
+
 function setCloseSelectionClickListener(){
-	var closeSelectionBtn = getCloseSelectionButton();
+	let closeSelectionBtn = getCloseSelectionButton();
 	closeSelectionBtn.onclick = clickListener;
 }
 
 function setPublishSelectedButtonClickListener(){
-	var publishSelectedBtn = getPublishSelectedButton();
+	let publishSelectedBtn = getPublishSelectedButton();
 	publishSelectedBtn.onclick = clickListener;
 }
 
 function setUnpublishSelectedButtonClickListener(){
-	var unpublishSelectedBtn = getUnpublishSelectedButton();
+	let unpublishSelectedBtn = getUnpublishSelectedButton();
 	unpublishSelectedBtn.onclick = clickListener;
 }
 
 function setDeleteSelectedButtonClickListener(){
-	var deleteSelectedBtn = getDeleteSelectedButton();
+	let deleteSelectedBtn = getDeleteSelectedButton();
 	deleteSelectedBtn.onclick = clickListener;
 }
 
 function setNewPostListener(){
-	var newPostBtns = getNewPostButtons();
-	for(var i = 0; i < newPostBtns.length; i++){
+	let newPostBtns = getNewPostButtons();
+	for(let i = 0; i < newPostBtns.length; i++){
 		newPostBtns[i].onclick = clickListener;
 	}
 }
@@ -128,6 +156,7 @@ function setPostCheckboxClickListener(){
 		}
 	}
 }
+
 function setPublishOrUnpublishPostButtonListener(){
 	var btns = getPublishOrUnpublishPostButton();
 	for(var i = 0; i < btns.length; i++){
@@ -187,6 +216,30 @@ function setPostClickListener(){
 	}
 }
 
+function getModalBackground(){
+	return document.getElementById("modalBackground");
+}
+
+function getProgressBarModal(){
+	return document.getElementById("progressBarModal");
+}
+
+function getLoginModal(){
+	return document.getElementById("loginModal");
+}
+
+function getLoginPasswordInput(){
+	return document.getElementById("loginPasswordInput");
+}
+
+function getLoginPasswordInputError(){
+	return document.getElementById("loginPasswordInputError");
+}
+
+function getLoginButton(){
+	return document.getElementById("loginBtn");
+}
+
 function getSearchNav(){
 	return document.getElementById("searchNav");
 }
@@ -239,6 +292,18 @@ function getDisplayPostDropDown(){
 	return document.getElementById("displayPostDropDown");
 }
 
+function getAllFilterDropDownElement(){
+	return document.getElementById("allFilter");
+}
+
+function getPublishedFilterDropDownElement(){
+	return document.getElementById("publishedFilter");
+}
+
+function getDraftsFilterDropDownElement(){
+	return document.getElementById("draftsFilter");
+}
+
 function getSelectAllCheckbox(){
 	return document.getElementById("selectAllCheckbox");
 }
@@ -286,6 +351,19 @@ function getPosts(){
 function clickListener(event){
 	var element = event.target;
 	switch(element.id){
+		case "loginBtn":
+			let loginPasswordInput = getLoginPasswordInput();
+			if(loginPasswordInput.value.length == 0){
+				showLoginPasswordInputError();
+				setLoginPasswordInputError("<p>Please enter a password</p>");
+			}else{
+				let password = loginPasswordInput.value;
+				hideLoginModal();
+				showProgressBarModal();
+				sendLoginRequestToServer(password);
+			}
+		break;
+
 		case "closeSelectionBtn":
 			deselectAllPosts();
 			checkSelectedPosts();
@@ -410,3 +488,294 @@ function checkAllPostsSelected(){
 	}
 	selectAllCheckbox.checked = isAllPostsSelected;
 }
+
+function setLoginPasswordInputError(value){
+	let loginPasswordInputError = getLoginPasswordInputError();
+	loginPasswordInputError.innerHTML = value;
+}
+
+function hideLoginPasswordInputError(){
+	let loginPasswordInputError = getLoginPasswordInputError();
+	loginPasswordInputError.style.display = "none";
+}
+
+function showLoginPasswordInputError(){
+	let loginPasswordInputError = getLoginPasswordInputError();
+	loginPasswordInputError.style.display = "block";
+}
+ 
+function hideModal(){
+	let modalBackground = getModalBackground();
+	modalBackground.style.display = "none";
+}
+
+function showModal(){
+	let modalBackground = getModalBackground();
+	modalBackground.style.display = "block";
+}
+
+function showLoginModal(){
+	let loginModal = getLoginModal();
+	loginModal.style.display = "block";
+}
+
+function hideLoginModal(){
+	let loginModal = getLoginModal();
+	loginModal.style.display = "none";
+}
+
+function showProgressBarModal(){
+	let progressBarModal = getProgressBarModal();
+	progressBarModal.style.display = "block";
+}
+
+function hideProgressBarModal(){
+	let progressBarModal = getProgressBarModal();
+	progressBarModal.style.display = "none";
+}
+
+function ajaxDashboardAccessResponseHandler(){
+	if(ajaxRequest.getReadyState() == 4 && ajaxRequest.getStatus() == 200){	
+		let isLoggedIn = ajaxRequest.getResponseText();
+		if(isLoggedIn == "true"){
+			hideModal();
+			hideProgressBarModal();
+		}else{
+			showModal();
+			showLoginModal();
+		}
+	}
+}
+
+function ajaxLoginRequestResponseHandler(){
+	if(ajaxRequest.getReadyState() == 4 && ajaxRequest.getStatus() == 200){	
+		let isLoggedIn = ajaxRequest.getResponseText();
+		if(isLoggedIn == "true"){
+			sendRetrieveDataRequestToServer();
+		}else{
+			showModal();
+			showLoginModal();
+			showLoginPasswordInputError();
+			setLoginPasswordInputError("<p>Password is not correct</p>");
+		}
+	}
+}
+
+function ajaxRetrieveDataResponseHandler(){
+	if(ajaxRequest.getReadyState() == 4 && ajaxRequest.getStatus() == 200){	
+		let jsonString = ajaxRequest.getResponseText();
+		let jsonObj = JSON.parse(jsonString);
+
+		hideProgressBarModal();
+		hideModal();
+
+		loadPostData(jsonObj);
+	}
+}
+
+function loadPostData(jsonObj){
+	postList = new Array();
+
+	for(let i = 0; i < jsonObj.length; i++){
+		postList.push(new Post(
+			jsonObj[i].id,
+			jsonObj[i].isPublished,
+			jsonObj[i].title,
+			jsonObj[i].content,
+			convertFromTimestampToJSDate(jsonObj[i].created)
+		));
+	}
+
+	postList.sort(function(q1, q2){
+		return q2.created - q1.created;
+	});
+
+	updatePostAnalytics();//update the number of all posts, number of published/draft posts etc
+	updatePosts();
+}
+
+function getNumberOfPublishedPosts(){
+	let numPublishedPosts = 0;
+	for(let i = 0; i < postList.length; i++){
+		if(postList[i].isPublished == "true"){
+			numPublishedPosts++;
+		}
+	}
+	return numPublishedPosts;
+}
+
+function updatePostAnalytics(){
+	let allFilter = getAllFilterDropDownElement();
+	let publishedFilter = getPublishedFilterDropDownElement();
+	let draftsFilter = getDraftsFilterDropDownElement();
+
+	let numPosts = postList.length;
+
+	allFilter.textContent = "All (" + numPosts + ")";
+	publishedFilter.textContent = "Published (" + getNumberOfPublishedPosts() + ")";
+	draftsFilter.textContent = "Drafts (" + (numPosts - getNumberOfPublishedPosts()) + ")";
+}
+
+function updatePosts(){
+	updatePostLayout();
+	setEventListeners();
+	alert("hello");
+}
+
+function updatePostLayout(){
+	let searchText = getSearchBar();
+	let filterDropDown = getDisplayPostDropDown();
+
+	let searchObj = new SearchObj(searchText.value, filterDropDown.value);
+
+	let html = "";
+
+	for(let i = 0; i < postList.length; i++){
+		if(postList[i].equals(searchObj)){
+
+			let id = postList[i].id;
+			let isPublished = postList[i].isPublished == "true";
+			let title = postList[i].title;
+			let content = postList[i].content;
+			let created = postList[i].created;
+
+			let isPublishedLayout = isPublished ? ">Published" : "style='color:orange;'>Draft";
+			let dateCreated = months[created.getMonth()] + " " + created.getDate();
+
+			html += 
+			"<table id='"+id+"' class='post'>" +
+					"<tr>" +
+						"<td>" +
+							"<input class='postCheckbox' type='checkbox'/>" +
+						"</td>" +
+						"<td>" +
+							"<table>" +
+								"<tr>" +
+									"<td>"+title+"</td>" +
+									"<td>" +
+										"<span>" +
+											"<span class='menuItems'>" +
+												"<button class='postActionBtn'><img class='publishBtn' src='images/icons/ic_publish.png'  width='24px' height='24px'/></button>" +
+												"<button class='postActionBtn'><img class='deleteBtn' src='images/icons/ic_delete.png'  width='24px' height='24px'/></button>" +
+												"<button class='postActionBtn'><img class='previewBtn' src='images/icons/ic_eye.png'  width='24px' height='24px'/></button>" +
+											"</span>" + 
+											"<button class='postActionBtn menuIcon'><img class='ellipsesBtn' src='images/icons/ic_ellipses.png'  width='24px' height='24px'/></button>" +
+										"</span>" +
+									"</td>" +
+								"</tr>" +
+								"<tr>" +
+									"<td><span "+isPublishedLayout+ "</span> &#183; "+dateCreated+"</td>" +
+									"<td>" +
+										"<span>" +
+											"<button class='postActionBtnSmall' style='margin-right: 16px;'><img class='shareBtn' src='images/icons/ic_share.png'  width='18px' height='18px'/></button>" +
+											"<span>"
+												"0<button class='postActionBtnSmall'><img class='analyticsBtn' src='images/icons/ic_chart.png'  width='18px' height='18px'/></button>" +
+											"</span>" +
+										"</span>" +
+									"</td>" +
+								"</tr>" +
+							"</table>" +
+						"</td>" +
+					"</tr>" +
+				"</table>";
+		}
+	}
+
+	document.getElementById("postContainer").innerHTML = html;
+}
+
+function Post(id, isPublished, title, content, created){
+	this.id = id;
+	this.isPublished = isPublished;
+	this.title = title;
+	this.content = content;
+	this.created = created;
+}
+
+function SearchObj(searchText, filter){
+	this.searchText = searchText;
+	this.filter = filter;
+}
+//---------------------UTILITY FUNCTIONS-------------------
+function AjaxRequest(){
+	this.request = null;
+	
+	this.initialize = function (){
+		if(window.XMLHttpRequest){
+			try{
+				this.request = new XMLHttpRequest();
+			}catch(e){
+				this.request = null;
+			}
+		//Now try the ActiveX (IE) version
+		}else if(window.ActiveXObject){
+			try{
+				this.request = new ActiveXObject("Msxml2.XMLHTTP");
+			//Try the older ActiveX object for older versions of IE
+			}catch(e){
+				try{
+					this.request = new ActiveXObject("Microsoft.XMLHTTP");
+				}catch(e){
+					this.request = null;
+				}
+			}
+		}
+	};
+	
+	this.getReadyState = function (){
+		return this.request.readyState;
+	};
+	
+	this.getStatus = function (){
+		return this.request.status;
+	};
+	
+	this.getResponseText = function (){
+		return this.request.responseText;
+	};
+	
+	this.getResponseXML = function (){
+		return this.request.responseXML;
+	};
+	
+	this.abort = function (){
+		this.request.abort();
+	};
+	
+	this.send = function (type, url, handler, postDataType, postData){
+		if(this.request != null){
+			//Kill the previous request
+			this.abort();
+			
+			//Tack on a dummy parameter to override browser caching
+			url += "?dummy=" + new Date().getTime();
+			
+			try{
+				this.request.onreadystatechange = handler;
+				this.request.open(type, url, true);	//always asynchronous (true)
+				if(type.toLowerCase() == "get"){
+					//Send a GET request
+					this.request.send(null);
+				}else{
+					//Send a POST request
+					this.request.setRequestHeader("Content-Type", postDataType);
+					this.request.send(postData);
+				}
+			}catch(e){
+				alert("Ajax error communicating with the server.\n"+"Details:"+e);
+			}
+		}
+	};
+}
+
+function convertFromTimestampToJSDate (timestamp) {
+	//spit timestamp into [Y, M, D, h, m, s]
+	var t = timestamp.split(/[- :]/);
+	
+	//apply each element to the Date function
+	var d = new Date(Date.UTC(t[0], t[1]-1, t[2], t[3]-1, t[4], t[5]));
+	
+	return d;
+}
+
+var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
