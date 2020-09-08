@@ -133,16 +133,29 @@ function setPostHoverListener(){
 		postItems[i].addEventListener("mouseover", function(){
 			var menuItems = getMenuItems();
 			var menuIcons = getMenuIcons();
-			menuItems[this.id].style.display = "block";
-			menuIcons[this.id].style.display = "none";
+			menuItems[getMenuItemIndexWithId(this.id)].style.display = "block";
+			menuIcons[getMenuItemIndexWithId(this.id)].style.display = "none";
 		});
 		postItems[i].addEventListener("mouseout", function(){
 			var menuItems = getMenuItems();
 			var menuIcons = getMenuIcons();
-			menuItems[this.id].style.display = "none";
-			menuIcons[this.id].style.display = "block";
+			menuItems[getMenuItemIndexWithId(this.id)].style.display = "none";
+			menuIcons[getMenuItemIndexWithId(this.id)].style.display = "block";
 		});
 	}
+}
+
+function getMenuItemIndexWithId(id){
+	let postItems = getPostItems();
+	let index = -1;
+	for(let i = 0; i < postItems.length; i++){
+		if(postItems[i].id == id){
+			index = i;
+			break;
+		}
+	}
+
+	return index;
 }
 
 function setPostCheckboxClickListener(){
@@ -619,7 +632,6 @@ function updatePostAnalytics(){
 function updatePosts(){
 	updatePostLayout();
 	setEventListeners();
-	alert("hello");
 }
 
 function updatePostLayout(){
@@ -632,7 +644,7 @@ function updatePostLayout(){
 
 	for(let i = 0; i < postList.length; i++){
 		if(postList[i].equals(searchObj)){
-
+			
 			let id = postList[i].id;
 			let isPublished = postList[i].isPublished == "true";
 			let title = postList[i].title;
@@ -668,8 +680,8 @@ function updatePostLayout(){
 									"<td>" +
 										"<span>" +
 											"<button class='postActionBtnSmall' style='margin-right: 16px;'><img class='shareBtn' src='images/icons/ic_share.png'  width='18px' height='18px'/></button>" +
-											"<span>"
-												"0<button class='postActionBtnSmall'><img class='analyticsBtn' src='images/icons/ic_chart.png'  width='18px' height='18px'/></button>" +
+											"<span>" +
+												"-<button class='postActionBtnSmall'><img class='analyticsBtn' src='images/icons/ic_chart.png'  width='18px' height='18px'/></button>" +
 											"</span>" +
 										"</span>" +
 									"</td>" +
@@ -690,6 +702,18 @@ function Post(id, isPublished, title, content, created){
 	this.title = title;
 	this.content = content;
 	this.created = created;
+
+	this.equals = function (searchObj){
+		if(this.isPublished.toLowerCase() == searchObj.filter.toLowerCase() || searchObj.filter.toLowerCase() == "all"){
+			if(
+			this.title.toLowerCase().trim().indexOf(searchObj.searchText.toLowerCase().trim()) != -1 ||
+			this.content.toLowerCase().indexOf.trim(searchObj.searchText.toLowerCase().trim()) != -1 
+			){
+				return true;
+			}
+		}
+		return false;
+	};
 }
 
 function SearchObj(searchText, filter){

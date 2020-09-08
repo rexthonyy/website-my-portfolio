@@ -7,7 +7,7 @@
 		$password = $_POST['password'];
 		
 		if(Consts::PASSWORD == $password){
-			$_SESSION['loggedIn'] = "loggedIn";
+			//$_SESSION['loggedIn'] = "loggedIn";
 			echo "true";
 		}else{
 			echo "false";
