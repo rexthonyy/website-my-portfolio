@@ -8,5 +8,9 @@
 		const TITLE = "title";
 		const CONTENT = "content";
 		const CREATED = "created";
+		
+		//image_tb
+		const NAME = "name";
+		const IMAGE_LINK = "image_link";
 	}
 ?>

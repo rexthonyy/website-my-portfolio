@@ -133,19 +133,19 @@ function setPostHoverListener(){
 		postItems[i].addEventListener("mouseover", function(){
 			var menuItems = getMenuItems();
 			var menuIcons = getMenuIcons();
-			menuItems[getMenuItemIndexWithId(this.id)].style.display = "block";
-			menuIcons[getMenuItemIndexWithId(this.id)].style.display = "none";
+			menuItems[getPostIndexWithId(this.id)].style.display = "block";
+			menuIcons[getPostIndexWithId(this.id)].style.display = "none";
 		});
 		postItems[i].addEventListener("mouseout", function(){
 			var menuItems = getMenuItems();
 			var menuIcons = getMenuIcons();
-			menuItems[getMenuItemIndexWithId(this.id)].style.display = "none";
-			menuIcons[getMenuItemIndexWithId(this.id)].style.display = "block";
+			menuItems[getPostIndexWithId(this.id)].style.display = "none";
+			menuIcons[getPostIndexWithId(this.id)].style.display = "block";
 		});
 	}
 }
 
-function getMenuItemIndexWithId(id){
+function getPostIndexWithId(id){
 	let postItems = getPostItems();
 	let index = -1;
 	for(let i = 0; i < postItems.length; i++){
@@ -395,8 +395,7 @@ function clickListener(event){
 		break;
 
 		case "newPostBtn":
-			// window.open("editor.php", "_self");
-			alert("create a new post");
+			window.open("editor.html", "_self");
 		break;
 
 		case "clearSearchBtn":
@@ -652,6 +651,8 @@ function updatePostLayout(){
 			let created = postList[i].created;
 
 			let isPublishedLayout = isPublished ? ">Published" : "style='color:orange;'>Draft";
+			let publishIcon = isPublished ? "ic_unpublish.png" : "ic_publish.png";
+			let publishTitle = isPublished ? "Unpublish" : "Publish";
 			let dateCreated = months[created.getMonth()] + " " + created.getDate();
 
 			html += 
@@ -667,9 +668,9 @@ function updatePostLayout(){
 									"<td>" +
 										"<span>" +
 											"<span class='menuItems'>" +
-												"<button class='postActionBtn'><img class='publishBtn' src='images/icons/ic_publish.png'  width='24px' height='24px'/></button>" +
-												"<button class='postActionBtn'><img class='deleteBtn' src='images/icons/ic_delete.png'  width='24px' height='24px'/></button>" +
-												"<button class='postActionBtn'><img class='previewBtn' src='images/icons/ic_eye.png'  width='24px' height='24px'/></button>" +
+												"<button class='postActionBtn'><img class='publishBtn' src='images/icons/"+publishIcon+"'  width='24px' height='24px' title='"+publishTitle+"'/></button>" +
+												"<button class='postActionBtn'><img class='deleteBtn' src='images/icons/ic_delete.png'  width='24px' height='24px' title='Delete post'/></button>" +
+												"<button class='postActionBtn'><img class='previewBtn' src='images/icons/ic_eye.png'  width='24px' height='24px' title='Preview post'/></button>" +
 											"</span>" + 
 											"<button class='postActionBtn menuIcon'><img class='ellipsesBtn' src='images/icons/ic_ellipses.png'  width='24px' height='24px'/></button>" +
 										"</span>" +
@@ -679,9 +680,9 @@ function updatePostLayout(){
 									"<td><span "+isPublishedLayout+ "</span> &#183; "+dateCreated+"</td>" +
 									"<td>" +
 										"<span>" +
-											"<button class='postActionBtnSmall' style='margin-right: 16px;'><img class='shareBtn' src='images/icons/ic_share.png'  width='18px' height='18px'/></button>" +
+											"<button class='postActionBtnSmall' style='margin-right: 16px;'><img class='shareBtn' src='images/icons/ic_share.png'  width='18px' height='18px' title='Share post'/></button>" +
 											"<span>" +
-												"-<button class='postActionBtnSmall'><img class='analyticsBtn' src='images/icons/ic_chart.png'  width='18px' height='18px'/></button>" +
+												"0<button class='postActionBtnSmall'><img class='analyticsBtn' src='images/icons/ic_chart.png'  width='18px' height='18px' title='View analytics'/></button>" +
 											"</span>" +
 										"</span>" +
 									"</td>" +

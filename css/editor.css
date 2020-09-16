@@ -1,0 +1,133 @@
+*{
+	padding: 0;
+	margin: 0;
+	outline: none;
+	text-decoration: none;
+	list-style: none;
+	box-sizing: border-box;
+}
+body{
+	font-family: Verdana, Geneva, Arial, sans-serif;
+	font-size: small;
+	background-color: white;
+}
+nav{
+	position: fixed;
+	width: 100%;
+	height: 65px;
+	padding: 0px 20px;
+	display: flex;
+	align-items: center;
+	border-bottom: 1px solid rgb(230, 230, 230);
+	background-color: white;
+}
+nav table{
+	width: 100%;
+	height: 65%;
+	font-size: 1.3em;
+	border-spacing: 20px 0;
+}
+nav table tr td:nth-child(1){
+	width: 1px;
+	white-space: nowrap;
+}
+nav table tr td:nth-child(3){
+	width: 1px;
+	white-space: nowrap;
+}
+nav table tr td input{
+	width: 100%;
+	border: 0;
+	border-bottom: 1px solid black;
+	font-size: 1.3em;
+}
+nav table tr td input:focus{
+	border-bottom: 1px solid rgb(58, 91, 158);
+}
+.actionBtn{
+	padding: 10px;
+	color: rgb(36, 41, 46);
+	background-color: rgb(250, 251, 252);
+	border-radius: 5px;
+	border: 1px solid rgb(222, 222, 222);
+}
+.actionBtn:hover{
+	cursor: pointer;
+	background-color: rgb(222, 222, 222);
+}
+#publishPostBtn{
+	background-color: rgb(58, 91, 158);
+	margin-left: 10px;
+	color: white;
+	border: 0;
+}
+#publishPostBtn:hover{
+	background-color: rgb(98, 138, 198);
+}
+.postActionBtn{
+	border: 0px;
+	border-radius: 24px;
+	padding: 10px;
+	background-color: transparent;
+}
+.postActionBtn:hover{
+	background-color: rgb(230, 230, 230);
+	cursor: pointer;
+}
+#body{
+	padding-top: 100px;
+}
+#mainContainer{
+	width: 90%;
+	margin: 0px auto;
+	border: 1px solid rgb(200, 200, 200);
+	margin-bottom: 50px;
+}
+#navigationEditor{
+	background-color: rgb(250, 251, 252);
+	border-bottom: 1px solid rgb(230, 230, 230);
+	padding-top: 1px;
+}
+#navigationEditor ul{
+	margin-bottom: -1px;
+	margin-left: -3px;
+}
+#navigationEditor ul li{
+	display: inline;
+	line-height: 50px;
+	margin-left: 2px;
+}
+#navigationEditor ul li a{
+	color: rgb(100, 100, 100);
+	padding: 17px 20px;
+}
+#navigationEditor ul li a:hover{
+	cursor: pointer;
+}
+.active{
+	background-color: white;
+	border-right: 1px solid rgb(230, 230, 230);
+	border-left: 1px solid rgb(230, 230, 230);
+	border-top: 1px solid white;
+	border-bottom: : 1px solid white;
+}
+.active:hover{
+	cursor: pointer;
+}
+#navigationEditor ul li img{
+	margin-right: 10px;
+}
+#postContent{
+	width: 100%;
+	height: 60vh;
+	padding: 20px;
+	border: 0;
+	font-size: 1.3em;
+	resize: none;
+}
+#previewWindow{
+	display: none;
+}
+#uploadWindow{
+	display: none;
+}
