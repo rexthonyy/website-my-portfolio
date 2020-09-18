@@ -13,6 +13,7 @@ function setEventListeners(){
 	setEditorWindowNavButtonClickListener();
 	setPreviewWindowNavButtonClickListener();
 	setUploadWindowNavButtonClickListener();
+	setEditorTabPressListener();
 	setEditorInputChangeListener();
 }
 
@@ -26,7 +27,7 @@ function sendRetrieveImagesRequestToServer(){
 function ajaxRetrieveImagesResponseHandler(){
 	if(ajaxRequest.getReadyState() == 4 && ajaxRequest.getStatus() == 200){	
 		let jsonString = ajaxRequest.getResponseText();
-		let jsonObj = JSON.parse(jsonString);
+		jsonObj = JSON.parse(jsonString);
 
 		hideProgressBarModal();
 		hideModal();
@@ -70,6 +71,18 @@ function setPreviewWindowNavButtonClickListener(){
 function setUploadWindowNavButtonClickListener(){
 	let uploadWindowNavButton = getUploadWindowNavButton();
 	uploadWindowNavButton.onclick = clickListener;
+}
+
+function setEditorTabPressListener(){
+	let editorInput = getEditorInput();
+	editorInput.onkeydown = function(e){
+		if(e.keyCode == 9 || e.which == 9){
+			e.preventDefault();
+			let s = this.selectionStart;
+			this.value = this.value.substring(0, this.selectionStart) + "\t" + this.value.substring(this.selectionEnd);
+			this.selectionEnd = s + 1;
+		}
+	};
 }
 
 function setEditorInputChangeListener(){
@@ -129,6 +142,22 @@ function getModalBackground(){
 
 function getProgressBarModal(){
 	return document.getElementById("progressBarModal");
+}
+
+function getPostImages(){
+	return document.getElementsByClassName("postImage");
+}
+
+function getCopyButtons(){
+	return document.getElementsByClassName("btnCopy");
+}
+
+function getDeleteButtons(){
+	return document.getElementsByClassName("btnDelete");
+}
+
+function getFAB(){
+	return document.getElementById("fab");
 }
 
 function clickListener(event){
@@ -207,9 +236,95 @@ function updatePreview(){
 }
 
 function setupUploadWindow(jsonObj){
-	for(let i = 0; i < jsonObj.length; i++){
-		alert(jsonObj[i].image_link);
+	setupUploadWindowLayout(jsonObj);
+	setupPostImageClickListener();
+	setupCopyImageClickListener();
+	setupDeleteImageClickListener();
+	setupUploadImageClickListener();
+}
+
+function setupUploadWindowLayout(jsonObj){
+	let innerHTML = "";
+	innerHTML = loadUploadTable(jsonObj, innerHTML, 5, "uploaded1");
+	innerHTML = loadUploadTable(jsonObj, innerHTML, 4, "uploaded2");
+	innerHTML = loadUploadTable(jsonObj, innerHTML, 3, "uploaded3");
+	innerHTML = loadUploadTable(jsonObj, innerHTML, 2, "uploaded4");
+	innerHTML = loadUploadTable(jsonObj, innerHTML, 1, "uploaded5");
+
+	innerHTML += "<div id='fabContainer'><img id='fab' src='images/icons/ic_add.png'/></div>";
+	
+	getUploadWindow().innerHTML = innerHTML;
+}
+
+function loadUploadTable(jsonObj, innerHTML, grid, id){
+	innerHTML += "<table id='"+id+"'>";
+	for(let i = 0; i <= (jsonObj.length / grid); i++){
+		innerHTML += "<tr>";
+			for(let j = (i * grid); j < ((i * grid) + grid); j++){
+				if(j < jsonObj.length){
+					let imageLink = jsonObj[j].image_link;
+					let id = jsonObj[j].id;
+					if(imageLink != undefined){
+						innerHTML += "<td><div class='hideableContainer'><img id='"+id+"' class='postImage' src='"+imageLink+"'/><div class='hideable'><span><button id='"+id+"' class='btnCopy'>Copy</button><button id='"+id+"' class='btnDelete'>Delete</button></span></div></div></td>";
+					}
+				}else{
+					innerHTML += "<td></td>";
+				}
+			}
+		innerHTML += "</tr>";
 	}
+	innerHTML += "</table>";
+	
+	return innerHTML;
+}
+
+function setupPostImageClickListener(){
+	let postImages = getPostImages();
+	for(let i = 0; i < postImages.length; i++){
+		postImages[i].onclick = function(event){
+			copyImageUrl(this.id);
+		};
+	}
+}
+
+function setupCopyImageClickListener(){
+	let copyBtns = getCopyButtons();
+	for(let i = 0; i < copyBtns.length; i++){
+		copyBtns[i].onclick = function(event){
+			copyImageUrl(this.id);
+		};
+	}
+}
+
+function setupDeleteImageClickListener(){
+	let deleteBtns = getDeleteButtons();
+	for(let i = 0; i < deleteBtns.length; i++){
+		deleteBtns[i].onclick = function(event){
+			alert("delete | id : " + this.id);
+		};
+	}
+}
+
+function setupUploadImageClickListener(){
+	let fab = getFAB();
+	fab.onclick = function(event){
+		alert("add image");
+	};
+}
+
+function copyImageUrl(id){
+	let postImage = getPostImageWithId(id);
+	let toCopy = "<img class='blogImg' src='"+postImage.image_link+"' alt='"+postImage.name+"' title='"+postImage.name+"'/>";
+	copyToClipboard(toCopy);
+}
+
+function getPostImageWithId(id){
+	for(let i = 0; i < jsonObj.length; i++){
+		if(id == jsonObj[i].id){
+			return jsonObj[i];
+		}
+	}
+	return undefined;
 }
 
 function hideModal(){
@@ -305,3 +420,12 @@ function AjaxRequest(){
 }
 
 var months = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+function copyToClipboard(text){
+	var dummy = document.createElement("textarea");
+	document.body.appendChild(dummy);
+	dummy.value = text;
+	dummy.select();
+	document.execCommand("copy");
+	document.body.removeChild(dummy);
+}
