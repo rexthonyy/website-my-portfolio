@@ -524,9 +524,22 @@
 		</section>
 		<!--The modal background-->
 		<div id="modalBackground">
+			<!-- The Spinner -->
 			<div class="dialog" id="progressBarModal">
 				<img id="progressBarImage" src="images/gifs/loading_bar.gif"/>
 			</div>
+
+			<!-- The uploading progress bar -->
+			<div class="dialog" id="uploadingModal">
+				<div class="progress-bar-fill">
+					<span class="progress-bar-text">0%</span>
+				</div>
+			</div>
 		</div>
+		<!-- Hidden elements -->
+		<form id="uploadForm" style="display: none;">
+			<input type="file" name="image[]" id="uploadFile"  accept="image/*" multiple />
+		</form>
+		
 	</body>
 </html>

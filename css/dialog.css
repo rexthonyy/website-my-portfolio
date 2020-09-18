@@ -77,3 +77,25 @@
 	color: white;
 	background-color: rgb(87, 101, 218);
 }
+
+#uploadingModal{
+	height: 24px;
+	width: 300px;
+	border: 2px solid darkblue;
+	border-radius: 20px;
+}
+
+.progress-bar-fill{
+	height: 100%;
+	width: 0%;
+	border-radius: 20px;
+	background-color: rgb(158, 191, 248);
+	display: flex;
+	align-items: center;
+	transition: width 0.25s;
+}
+
+.progress-bar-text{
+	margin-left: 10px;
+	font-weight: bold;
+}

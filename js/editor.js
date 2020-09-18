@@ -3,6 +3,10 @@ window.onload = function(){
 	setEventListeners();
 	updatePreview();
 	sendRetrieveImagesRequestToServer();
+	
+	hideUploadingModal();
+	showProgressBarModal();
+	showModal();
 }
 
 function setEventListeners(){
@@ -31,6 +35,21 @@ function ajaxRetrieveImagesResponseHandler(){
 
 		hideProgressBarModal();
 		hideModal();
+
+		setupUploadWindow(jsonObj);
+	}
+}
+
+function ajaxUploadImagesResponseHandler(){
+	if(ajaxRequest.getReadyState() == 4 && ajaxRequest.getStatus() == 200){
+		let jsonString = ajaxRequest.getResponseText();
+		console.log(jsonString);
+		jsonObj = JSON.parse(jsonString);
+
+		hideUploadingModal();
+		hideModal();
+
+		setProgressBarPercent(0);
 
 		setupUploadWindow(jsonObj);
 	}
@@ -144,6 +163,18 @@ function getProgressBarModal(){
 	return document.getElementById("progressBarModal");
 }
 
+function getUploadingModal(){
+	return document.getElementById("uploadingModal");
+}
+
+function getProgressBarFill(){
+	return document.getElementsByClassName("progress-bar-fill")[0];
+}
+
+function getProgressBarText(){
+	return document.getElementsByClassName("progress-bar-text")[0];
+}
+
 function getPostImages(){
 	return document.getElementsByClassName("postImage");
 }
@@ -158,6 +189,14 @@ function getDeleteButtons(){
 
 function getFAB(){
 	return document.getElementById("fab");
+}
+
+function getUploadForm(){
+	return document.getElementById("uploadForm");
+}
+
+function getUploadFile(){
+	return document.getElementById("uploadFile");
 }
 
 function clickListener(event){
@@ -308,8 +347,28 @@ function setupDeleteImageClickListener(){
 function setupUploadImageClickListener(){
 	let fab = getFAB();
 	fab.onclick = function(event){
-		alert("add image");
+		let fileUploader = getUploadFile();
+		fileUploader.addEventListener("change", function(event){
+			ajaxRequest = new AjaxRequest();
+			ajaxRequest.initialize();
+
+			showModal();
+			showUploadingModal();
+
+			ajaxRequest.upload(getUploadForm(), "upload.req.php", ajaxUploadImagesResponseHandler, function(e){
+				const percent = e.lengthComputable ? (e.loaded / e.total) * 100 : 0;
+				setProgressBarPercent(percent);
+				})
+		});
+		fileUploader.click();
 	};
+}
+
+function setProgressBarPercent(percent){
+	let progressBarFill = getProgressBarFill();
+	let progressBarText = getProgressBarText();
+	progressBarFill.style.width = percent.toFixed(2) + "%";
+	progressBarText.textContent = percent.toFixed(2) + "%";
 }
 
 function copyImageUrl(id){
@@ -347,6 +406,15 @@ function hideProgressBarModal(){
 	progressBarModal.style.display = "none";
 }
 
+function showUploadingModal(){
+	let uploadingModal = getUploadingModal();
+	uploadingModal.style.display = "block";
+}
+
+function hideUploadingModal(){
+	let uploadingModal = getUploadingModal();
+	uploadingModal.style.display = "none";
+}
 //---------------------UTILITY FUNCTIONS-------------------
 function AjaxRequest(){
 	this.request = null;
@@ -412,6 +480,22 @@ function AjaxRequest(){
 					this.request.setRequestHeader("Content-Type", postDataType);
 					this.request.send(postData);
 				}
+			}catch(e){
+				alert("Ajax error communicating with the server.\n"+"Details:"+e);
+			}
+		}
+	};
+
+	this.upload = function (form, url, handler, progressListener){
+		if(this.request != null){
+			this.abort();
+
+			try{
+				this.request.onreadystatechange = handler;
+				this.request.open("POST", url, true);
+				this.request.upload.addEventListener("progress", progressListener);
+				this.request.setRequestHeader("Content-Type", "multipart/form-data; charset=utf-8; boundary="+Math.random().toString().substr(2));
+				this.request.send(new FormData(form));
 			}catch(e){
 				alert("Ajax error communicating with the server.\n"+"Details:"+e);
 			}
