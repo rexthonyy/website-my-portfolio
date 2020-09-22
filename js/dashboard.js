@@ -2,6 +2,7 @@ window.onload = function(){
 	setLoginButtonClickListener();
 	//setEventListeners();
 	sendDashboardAccessRequestToServers();
+	WEBSITE_URL = "www.myurl.com/post.php?id=";
 }
 
 function setEventListeners(){
@@ -280,7 +281,7 @@ function setSharePostButtonListener(){
 	for(var i = 0; i < btns.length; i++){
 		btns[i].onclick = function(e){
 			stopClickPropagation(e);
-			alert("Share post : " + this.id);
+			copyToClipboard(WEBSITE_URL + this.id);
 		};
 	}
 }
@@ -983,3 +984,12 @@ function convertFromTimestampToJSDate (timestamp) {
 }
 
 var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+
+function copyToClipboard(text){
+	var dummy = document.createElement("textarea");
+	document.body.appendChild(dummy);
+	dummy.value = text;
+	dummy.select();
+	document.execCommand("copy");
+	document.body.removeChild(dummy);
+}

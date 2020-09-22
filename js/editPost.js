@@ -346,7 +346,7 @@ function updatePreview(){
 
 	innerHTML += "<h1><a href='#'>" + titleInput.value + "</a></h1>";
 	innerHTML += editorInput.value;
-	innerHTML += "<div class='blogFooter'><time>"+date+"</time><div><a href='https://twitter.com/share?ref_src=twsrc%5Etfw' class='twitter-share-button' data-show-count='false'>Tweet</a><script async src='https://platform.twitter.com/widgets.js' charset='utf-8'></script><a href='https://www.facebook.com/sharer/sharer.php?u=rexthonyy.github.io/website-my-portfolio' target='_blank'><img class='fb_share' src='images/icons/facebook_share_icon.png' alt='facebook share button'/></a></div></div>";
+	innerHTML += "<div class='blogFooter'><time>"+date+"</time><div><a href='https://twitter.com/share?hashtags=rexthonyy&text=Check out this post blog. Always keep it real'><img src='images/icons/twitter_share_icon.png' title='Share this post on Twitter'/></a><a href='https://www.facebook.com/sharer/sharer.php?u=rexthonyy.github.io/website-my-portfolio' target='_blank'><img class='fb_share' src='images/icons/facebook_share_icon.png' alt='facebook share button'/></a></div></div>";
 	previewWindow.innerHTML = innerHTML;
 }
 
