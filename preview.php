@@ -6,48 +6,29 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<!-- SEO Description -->
         <meta name="description" content="Rex Anthony is a web developer.">
-		<title>Blog | Rex Anthony</title>
-		<link type="text/css" rel="stylesheet" href="css/dialog.css"/>
+		<title>Preview</title>
 		<link type="text/css" rel="stylesheet" href="css/headerAndFooter.css"/>
-		<link type="text/css" rel="stylesheet" href="css/blogHero.css"/>
+		<link type="text/css" rel="stylesheet" href="css/preview.css"/>
 		<link type="text/css" rel="stylesheet" href="css/blog.css"/>
-		<script type="text/javascript" src="js/headerAndFooter.js"></script>
-		<script type="text/javascript" src="js/blog.js"></script>
+		<link type="text/css" rel="stylesheet" href="css/dialog.css"/>
 		<link type="image/x-icon" rel="icon" href="images/icons/my_header_icon.png"/>
+		<script type="text/javascript" src="js/preview.js"></script>
 		<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 	</head>
 
-	<body onload="loadHeaderAndFooterJS();loadBlogJS();">
+	<body>
 		<!--The top navigation-->
-		<div>
-			<nav id="nav" class="nav_transparent">
-				<input type="checkbox" id="check">
-					<label for="check" id="nav_hamburger" class="checkbtn_transparent">
-						<i class="fas fa-bars"></i>
-					</label>
-				<label id="logo">
-					<a href="#">
-						<img src="images/icons/my_header_icon.png" alt="website icon"/>
-					</a>
-				</label>
-				<ul id="nav_item_container" class="nav_item_container_transparent">
-					<li><a id="nav_item_home" class="nav_item_inactive_transparent" href="index.html#heroBg">Home</a></li>
-					<li><a id="nav_item_about" class="nav_item_inactive_transparent" href="index.html#abt">About</a></li>
-					<li><a id="nav_item_services" class="nav_item_inactive_transparent" href="index.html#services">Services</a></li>
-					<li><a id="nav_item_portfolio" class="nav_item_inactive_transparent" href="index.html#portfolio">Portfolio</a></li>
-					<li><a id="nav_item_blog" class="nav_item_active" href="blog.html">Blog</a></li>
-				</ul>
-			</nav>
-			<div id="blogHeroBg">
-				<p>My writings</p>
+		<div id="header">
+			<div>
+				<p>PREVIEW</p>
 			</div>
 		</div>
 		
 		<!--The content of the blog-->
 		<div id="bodyContainer">
 			<div id="bodyContent">
-				<div>
-					<!-- <h1><a href="#">Introducing Fingerprint Lock for Android</a></h1>
+				<!-- <div>
+					<h1><a href="#">Introducing Fingerprint Lock for Android</a></h1>
 					<p>
 						Earlier this year, we rolled out Touch ID and Face ID for iPhone to provide an extra layer of security for WhatsApp users. Today we’re introducing similar authentication, allowing you to unlock the app with your fingerprint, on supported Android phones. To enable it, tap Settings > Account > Privacy > Fingerprint lock. Turn on Unlock with fingerprint, and confirm your fingerprint.
 					</p>
@@ -58,25 +39,8 @@
 							<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 							<a href="https://www.facebook.com/sharer/sharer.php?u=rexthonyy.github.io/website-my-portfolio" target="_blank"><img class="fb_share" src="images/icons/facebook_share_icon.png" alt="facebook share button"/></a>
 						</div>
-					</div> 
-				</div>
-
-				<div class="spacer"></div>
-
-				<div>
-					<h1><a href="#">Introducing Fingerprint Lock for Android</a></h1>
-					<p>
-						Earlier this year, we rolled out Touch ID and Face ID for iPhone to provide an extra layer of security for WhatsApp users. Today we’re introducing similar authentication, allowing you to unlock the app with your fingerprint, on supported Android phones. To enable it, tap Settings > Account > Privacy > Fingerprint lock. Turn on Unlock with fingerprint, and confirm your fingerprint.
-					</p>
-					<img class="blogImg" src="images/pics/sample.PNG" alt="somehting"/>
-					<div class="blogFooter">
-						<time>April 6, 1998</time>
-						<div>
-							<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-							<a href="https://www.facebook.com/sharer/sharer.php?u=rexthonyy.github.io/website-my-portfolio" target="_blank"><img class="fb_share" src="images/icons/facebook_share_icon.png" alt="facebook share button"/></a>
-						</div>
 					</div>
-				</div>-->
+				</div> -->
 			</div>
 		</div>
 
@@ -112,5 +76,8 @@
 				<img id="progressBarImage" src="images/gifs/loading_bar.gif"/>
 			</div>
 		</div>	
+
+		<!-- Hidden elements -->
+		<input id="id" type="hidden" value="<?php echo $_GET['id']; ?>"/>
 	</body>
 </html>

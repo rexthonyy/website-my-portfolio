@@ -1,0 +1,18 @@
+#header{
+	height: 200px;
+}
+#header div p{
+	text-align: center;
+	line-height: 200px;
+	font-size: 3em;
+	color: rgb(180, 180, 180);
+}
+@media (max-width: 1000px){
+	#header{
+		height: 190px;
+	}
+	#header div p{
+		line-height: 190px;
+		font-size: 3.7em;
+	}
+}

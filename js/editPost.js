@@ -1,6 +1,7 @@
 window.onload = function(){
 	currentDate = new Date();
 	setEventListeners();
+	initialize();
 	updatePreview();
 	sendRetrieveImagesRequestToServer();
 	
@@ -19,6 +20,11 @@ function setEventListeners(){
 	setUploadWindowNavButtonClickListener();
 	setEditorTabPressListener();
 	setEditorInputChangeListener();
+}
+
+function initialize(){
+	getTitleInput().value = getTitle().value;
+	getEditorInput().value = getContent().value;
 }
 
 function sendRetrieveImagesRequestToServer(){
@@ -73,14 +79,15 @@ function ajaxDeleteImageResponseHandler(){
 	}
 }
 
-function ajaxCreatePostResponseHandler(){
+function ajaxUpdatePostResponseHandler(){
 	if(ajaxRequest.getReadyState() == 4 && ajaxRequest.getStatus() == 200){
 		let isSuccessful = ajaxRequest.getResponseText();
 		//console.log(isSuccessful);
+		//alert(isSuccessful);
 		if(isSuccessful == "true"){
 			window.open("dashboard.html", "_self");
 		}else{
-			alert("Post could not be created");
+			alert("Update failed");
 		}
 		hideModal();
 		hideProgressBarModal();
@@ -231,6 +238,18 @@ function getUploadFile(){
 	return document.getElementById("uploadFile");
 }
 
+function getId(){
+	return document.getElementById("id");
+}
+
+function getTitle(){
+	return document.getElementById("title");
+}
+
+function getContent(){
+	return document.getElementById("content");
+}
+
 function clickListener(event){
 	var element = event.target;
 	switch(element.id){
@@ -262,15 +281,19 @@ function clickListener(event){
 
 function sendPostToServer(isPublished){
 
+	let id = getId().value;
 	let title = getTitleInput().value;
 	let content = getEditorInput().value;
+	let last_updated_date = new Date();
+	last_updated_date.setHours(last_updated_date.getHours() + 1);
+	let last_updated = last_updated_date.toISOString().slice(0, 19).replace('T', ' ');
 
 	if(title.length != 0){
 		// alert("isPublished : " + isPublished + "\n" + "title : " + title + "\n" + "content : " + content);
-		let postData = "isPublished=" + isPublished + "&title=" + escape(title) + "&content=" + escape(content);
+		let postData = "id="+ id + "&isPublished=" + isPublished + "&title=" + escape(title) + "&content=" + escape(content) + "&last_updated=" + escape(last_updated);
 		ajaxRequest = new AjaxRequest();
 		ajaxRequest.initialize();
-		ajaxRequest.send("POST", "createPost.req.php", ajaxCreatePostResponseHandler, "application/x-www-form-urlencoded; charset=UTF-8", postData);
+		ajaxRequest.send("POST", "updatePost.req.php", ajaxUpdatePostResponseHandler, "application/x-www-form-urlencoded; charset=UTF-8", postData);
 
 		showModal();
 		showProgressBarModal();

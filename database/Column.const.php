@@ -8,6 +8,7 @@
 		const TITLE = "title";
 		const CONTENT = "content";
 		const CREATED = "created";
+		const LAST_UPDATED = "last_updated";
 		
 		//image_tb
 		const NAME = "name";

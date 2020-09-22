@@ -1,5 +1,6 @@
 window.onload = function(){
-	setEventListeners();
+	setLoginButtonClickListener();
+	//setEventListeners();
 	sendDashboardAccessRequestToServers();
 }
 
@@ -47,9 +48,41 @@ function sendRetrieveDataRequestToServer(){
 	ajaxRequest.send("GET", "getPosts.req.php", ajaxRetrieveDataResponseHandler);
 }
 
+function sendPublishPostRequestToServer(ids){
+	let postData = "ids=" + escape(ids);
+	ajaxRequest = new AjaxRequest();
+	ajaxRequest.initialize();
+	ajaxRequest.send("POST", "publishPost.req.php", ajaxPublishPostRequestResponseHandler, "application/x-www-form-urlencoded; charset=UTF-8", postData);
+}
+
+function sendUnpublishPostRequestToServer(ids){
+	let postData = "ids=" + escape(ids);
+	ajaxRequest = new AjaxRequest();
+	ajaxRequest.initialize();
+	ajaxRequest.send("POST", "unpublishPost.req.php", ajaxUnpublishPostRequestResponseHandler, "application/x-www-form-urlencoded; charset=UTF-8", postData);
+}
+
+function sendDeletePostRequestToServer(ids){
+	let postData = "ids=" + escape(ids);
+	ajaxRequest = new AjaxRequest();
+	ajaxRequest.initialize();
+	ajaxRequest.send("POST", "deletePost.req.php", ajaxDeletePostRequestResponseHandler, "application/x-www-form-urlencoded; charset=UTF-8", postData);
+}
+
 function setLoginButtonClickListener(){
 	let loginButton = getLoginButton();
 	loginButton.onclick = clickListener;
+
+	let passwordInput = getLoginPasswordInput();
+	passwordInput.removeEventListener("keyup", passwordInputHandler);
+	passwordInput.addEventListener("keyup", passwordInputHandler);
+}
+
+function passwordInputHandler(event){
+	event.preventDefault();
+	if(event.keyCode === 13){
+		login();
+	}
 }
 
 function setCloseSelectionClickListener(){
@@ -81,6 +114,8 @@ function setNewPostListener(){
 
 function setSearchBarFocusListener(){
 	var searchBar = getSearchBar();
+	searchBar.removeEventListener("focus", searchBarFocusListener);
+	searchBar.removeEventListener("blur", searchBarUnfocusListener);
 	searchBar.addEventListener("focus", searchBarFocusListener, true);
 	searchBar.addEventListener("blur", searchBarUnfocusListener, true);
 }
@@ -88,9 +123,12 @@ function setSearchBarFocusListener(){
 function setSearchBarChangeListener(){
 	var searchBar = getSearchBar();
 	searchBarChangeListener("");
-	searchBar.addEventListener("input", function(evt){ 
-		searchBarChangeListener(this.value);
-	});
+	searchBar.removeEventListener("input", searchBarChangeHandler);
+	searchBar.addEventListener("input", searchBarChangeHandler);
+}
+
+function searchBarChangeHandler(){
+	searchBarChangeListener(this.value);
 }
 
 function setClearSearchBarButtonListener(){
@@ -101,6 +139,15 @@ function setClearSearchBarButtonListener(){
 function setSearchButtonListener(){
 	var searchBtn = getSearchBtn();
 	searchBtn.onclick = clickListener;
+	
+	let searchInput = getSearchBar();
+	//searchInput.removeListener("keyup", undefined);
+	searchInput.addEventListener("keyup", function(event){
+		event.preventDefault();
+		if(event.keyCode === 13){
+			getSearchBtn().click();
+		}
+	});
 }
 
 function setDisplayPostDropDownSelectionListener(){
@@ -130,19 +177,25 @@ function setPostHoverListener(){
 		var menuIcons = getMenuIcons();
 		menuItems[i].style.display = "none";
 		menuIcons[i].style.display = "block";
-		postItems[i].addEventListener("mouseover", function(){
-			var menuItems = getMenuItems();
-			var menuIcons = getMenuIcons();
-			menuItems[getPostIndexWithId(this.id)].style.display = "block";
-			menuIcons[getPostIndexWithId(this.id)].style.display = "none";
-		});
-		postItems[i].addEventListener("mouseout", function(){
-			var menuItems = getMenuItems();
-			var menuIcons = getMenuIcons();
-			menuItems[getPostIndexWithId(this.id)].style.display = "none";
-			menuIcons[getPostIndexWithId(this.id)].style.display = "block";
-		});
+		postItems[i].removeEventListener("mouseover", mouseOverEventHandler);
+		postItems[i].addEventListener("mouseover", mouseOverEventHandler);
+		postItems[i].removeEventListener("mouseout", mouseOutEventHandler);
+		postItems[i].addEventListener("mouseout", mouseOutEventHandler);
 	}
+}
+
+function mouseOverEventHandler(){
+	var menuItems = getMenuItems();
+	var menuIcons = getMenuIcons();
+	menuItems[getPostIndexWithId(this.id)].style.display = "block";
+	menuIcons[getPostIndexWithId(this.id)].style.display = "none";
+}
+
+function mouseOutEventHandler(){
+	var menuItems = getMenuItems();
+	var menuIcons = getMenuIcons();
+	menuItems[getPostIndexWithId(this.id)].style.display = "none";
+	menuIcons[getPostIndexWithId(this.id)].style.display = "block";
 }
 
 function getPostIndexWithId(id){
@@ -156,6 +209,15 @@ function getPostIndexWithId(id){
 	}
 
 	return index;
+}
+
+function getPostWithId(id){
+	for(let i = 0; i < postList.length; i++){
+		if(postList[i].id == id){
+			return postList[i];
+		}
+	}
+	return undefined;
 }
 
 function setPostCheckboxClickListener(){
@@ -175,7 +237,16 @@ function setPublishOrUnpublishPostButtonListener(){
 	for(var i = 0; i < btns.length; i++){
 		btns[i].onclick = function(e){
 			stopClickPropagation(e);
-			alert("Publish post");
+			let post = getPostWithId(this.id);
+
+			showProgressBarModal();
+			showModal();
+
+			if(post.isPublished == "true"){
+				sendUnpublishPostRequestToServer(this.id);
+			}else{
+				sendPublishPostRequestToServer(this.id);
+			}
 		};
 	}
 }
@@ -185,7 +256,11 @@ function setDeletePostButtonListener(){
 	for(var i = 0; i < btns.length; i++){
 		btns[i].onclick = function(e){
 			stopClickPropagation(e);
-			alert("Delete post");
+
+			showProgressBarModal();
+			showModal();
+
+			sendDeletePostRequestToServer(this.id);
 		};
 	}
 }
@@ -195,7 +270,7 @@ function setPreviewPostButtonListener(){
 	for(var i = 0; i < btns.length; i++){
 		btns[i].onclick = function(e){
 			stopClickPropagation(e);
-			alert("Preview post");
+			window.open("preview.php?id="+this.id, "_blank");
 		};
 	}
 }
@@ -205,7 +280,7 @@ function setSharePostButtonListener(){
 	for(var i = 0; i < btns.length; i++){
 		btns[i].onclick = function(e){
 			stopClickPropagation(e);
-			alert("Share post");
+			alert("Share post : " + this.id);
 		};
 	}
 }
@@ -215,7 +290,7 @@ function setAnalyticsButtonListener(){
 	for(var i = 0; i < btns.length; i++){
 		btns[i].onclick = function(e){
 			stopClickPropagation(e);
-			alert("Analytics post");
+			alert("Analytics post : " + this.id);
 		};
 	}
 }
@@ -224,7 +299,7 @@ function setPostClickListener(){
 	var posts = getPosts();
 	for(var i = 0; i < posts.length; i++){
 		posts[i].onclick = function(e){
-			alert("Clicked post with id : " + this.id);
+			window.open("editPost.php?id="+this.id, "_self");
 		};
 	}
 }
@@ -365,16 +440,7 @@ function clickListener(event){
 	var element = event.target;
 	switch(element.id){
 		case "loginBtn":
-			let loginPasswordInput = getLoginPasswordInput();
-			if(loginPasswordInput.value.length == 0){
-				showLoginPasswordInputError();
-				setLoginPasswordInputError("<p>Please enter a password</p>");
-			}else{
-				let password = loginPasswordInput.value;
-				hideLoginModal();
-				showProgressBarModal();
-				sendLoginRequestToServer(password);
-			}
+			login();
 		break;
 
 		case "closeSelectionBtn":
@@ -383,15 +449,15 @@ function clickListener(event){
 		break;
 
 		case "publishSelectedBtn":
-			alert("publish selected button");
+			publishSelectedPosts();
 		break;
 
 		case "unpublishSelectedBtn":
-			alert("unpublish selected button");
+			unpublishSelectedPosts();
 		break;
 
 		case "deleteSelectedBtn":
-			alert("delete selected button");
+			deleteSelectedPosts();
 		break;
 
 		case "newPostBtn":
@@ -409,6 +475,73 @@ function clickListener(event){
 		case "searchBtn":
 			displayPosts();
 		break;
+	}
+}
+
+function publishSelectedPosts(){
+	let ids = "";
+	var postCheckboxes = getPostCheckboxes();
+	for(var i = 0; i < postCheckboxes.length; i++){
+		if(postCheckboxes[i].checked){
+			if(ids.length > 0){
+				ids += ", ";
+			}
+			ids += postCheckboxes[i].id;
+		}
+	}
+
+	showProgressBarModal();
+	showModal();
+
+	sendPublishPostRequestToServer(ids);
+}
+
+function unpublishSelectedPosts(){
+	let ids = "";
+	var postCheckboxes = getPostCheckboxes();
+	for(var i = 0; i < postCheckboxes.length; i++){
+		if(postCheckboxes[i].checked){
+			if(ids.length > 0){
+				ids += ", ";
+			}
+			ids += postCheckboxes[i].id;
+		}
+	}
+
+	showProgressBarModal();
+	showModal();
+	
+	sendUnpublishPostRequestToServer(ids);
+}
+
+function deleteSelectedPosts(){
+	let ids = "";
+	var postCheckboxes = getPostCheckboxes();
+	for(var i = 0; i < postCheckboxes.length; i++){
+		if(postCheckboxes[i].checked){
+			if(ids.length > 0){
+				ids += ", ";
+			}
+			ids += postCheckboxes[i].id;
+		}
+	}
+
+	showProgressBarModal();
+	showModal();
+	
+	sendDeletePostRequestToServer(ids);
+}
+
+function login(){
+	let loginPasswordInput = getLoginPasswordInput();
+	if(loginPasswordInput.value.length == 0){
+		showLoginPasswordInputError();
+		setLoginPasswordInputError("<p>Please enter a password</p>");
+	}else{
+		let password = loginPasswordInput.value;
+		hideLoginModal();
+		showProgressBarModal();
+		sendLoginRequestToServer(password);
 	}
 }
 
@@ -441,9 +574,11 @@ function stopClickPropagation(e){
 }
 
 function displayPosts(){
-	var searchBar = getSearchBar();
-	var displayPostDropDown = getDisplayPostDropDown();
-	alert("Search for : " + searchBar.value + " Filter : " + displayPostDropDown.value);
+	let searchEntry = getSearchBar().value;
+	let filterValue = getDisplayPostDropDown().value;
+	
+	updatePosts();
+	checkSelectedPosts();
 }
 
 function selectAllPosts(){
@@ -555,6 +690,8 @@ function ajaxDashboardAccessResponseHandler(){
 		}else{
 			showModal();
 			showLoginModal();
+
+			getLoginPasswordInput().focus();
 		}
 	}
 }
@@ -576,6 +713,7 @@ function ajaxLoginRequestResponseHandler(){
 function ajaxRetrieveDataResponseHandler(){
 	if(ajaxRequest.getReadyState() == 4 && ajaxRequest.getStatus() == 200){	
 		let jsonString = ajaxRequest.getResponseText();
+		//console.log(jsonString);
 		let jsonObj = JSON.parse(jsonString);
 
 		hideProgressBarModal();
@@ -585,9 +723,50 @@ function ajaxRetrieveDataResponseHandler(){
 	}
 }
 
+function ajaxPublishPostRequestResponseHandler(){
+	if(ajaxRequest.getReadyState() == 4 && ajaxRequest.getStatus() == 200){	
+		let jsonString = ajaxRequest.getResponseText();
+		//console.log(jsonString);
+		let jsonObj = JSON.parse(jsonString);
+
+		hideProgressBarModal();
+		hideModal();
+
+		loadPostData(jsonObj);
+		checkSelectedPosts();
+	}
+}
+
+function ajaxUnpublishPostRequestResponseHandler(){
+	if(ajaxRequest.getReadyState() == 4 && ajaxRequest.getStatus() == 200){	
+		let jsonString = ajaxRequest.getResponseText();
+		//console.log(jsonString);
+		let jsonObj = JSON.parse(jsonString);
+
+		hideProgressBarModal();
+		hideModal();
+
+		loadPostData(jsonObj);
+		checkSelectedPosts();
+	}
+}
+
+function ajaxDeletePostRequestResponseHandler(){
+	if(ajaxRequest.getReadyState() == 4 && ajaxRequest.getStatus() == 200){	
+		let jsonString = ajaxRequest.getResponseText();
+		//console.log(jsonString);
+		let jsonObj = JSON.parse(jsonString);
+
+		hideProgressBarModal();
+		hideModal();
+
+		loadPostData(jsonObj);
+		checkSelectedPosts();
+	}
+}
+
 function loadPostData(jsonObj){
 	postList = new Array();
-
 	for(let i = 0; i < jsonObj.length; i++){
 		postList.push(new Post(
 			jsonObj[i].id,
@@ -659,7 +838,7 @@ function updatePostLayout(){
 			"<table id='"+id+"' class='post'>" +
 					"<tr>" +
 						"<td>" +
-							"<input class='postCheckbox' type='checkbox'/>" +
+							"<input id='"+id+"' class='postCheckbox' type='checkbox'/>" +
 						"</td>" +
 						"<td>" +
 							"<table>" +
@@ -668,11 +847,11 @@ function updatePostLayout(){
 									"<td>" +
 										"<span>" +
 											"<span class='menuItems'>" +
-												"<button class='postActionBtn'><img class='publishBtn' src='images/icons/"+publishIcon+"'  width='24px' height='24px' title='"+publishTitle+"'/></button>" +
-												"<button class='postActionBtn'><img class='deleteBtn' src='images/icons/ic_delete.png'  width='24px' height='24px' title='Delete post'/></button>" +
-												"<button class='postActionBtn'><img class='previewBtn' src='images/icons/ic_eye.png'  width='24px' height='24px' title='Preview post'/></button>" +
+												"<button class='postActionBtn'><img id='"+id+"' class='publishBtn' src='images/icons/"+publishIcon+"'  width='24px' height='24px' title='"+publishTitle+"'/></button>" +
+												"<button class='postActionBtn'><img id='"+id+"' class='deleteBtn' src='images/icons/ic_delete.png'  width='24px' height='24px' title='Delete post'/></button>" +
+												"<button class='postActionBtn'><img id='"+id+"' class='previewBtn' src='images/icons/ic_eye.png'  width='24px' height='24px' title='Preview post'/></button>" +
 											"</span>" + 
-											"<button class='postActionBtn menuIcon'><img class='ellipsesBtn' src='images/icons/ic_ellipses.png'  width='24px' height='24px'/></button>" +
+											"<button class='postActionBtn menuIcon'><img id='"+id+"' class='ellipsesBtn' src='images/icons/ic_ellipses.png'  width='24px' height='24px'/></button>" +
 										"</span>" +
 									"</td>" +
 								"</tr>" +
@@ -680,9 +859,9 @@ function updatePostLayout(){
 									"<td><span "+isPublishedLayout+ "</span> &#183; "+dateCreated+"</td>" +
 									"<td>" +
 										"<span>" +
-											"<button class='postActionBtnSmall' style='margin-right: 16px;'><img class='shareBtn' src='images/icons/ic_share.png'  width='18px' height='18px' title='Share post'/></button>" +
+											"<button class='postActionBtnSmall' style='margin-right: 16px;'><img id='"+id+"' class='shareBtn' src='images/icons/ic_share.png'  width='18px' height='18px' title='Share post'/></button>" +
 											"<span>" +
-												"0<button class='postActionBtnSmall'><img class='analyticsBtn' src='images/icons/ic_chart.png'  width='18px' height='18px' title='View analytics'/></button>" +
+												"0<button class='postActionBtnSmall'><img id='"+id+"' class='analyticsBtn' src='images/icons/ic_chart.png'  width='18px' height='18px' title='View analytics'/></button>" +
 											"</span>" +
 										"</span>" +
 									"</td>" +
@@ -708,7 +887,7 @@ function Post(id, isPublished, title, content, created){
 		if(this.isPublished.toLowerCase() == searchObj.filter.toLowerCase() || searchObj.filter.toLowerCase() == "all"){
 			if(
 			this.title.toLowerCase().trim().indexOf(searchObj.searchText.toLowerCase().trim()) != -1 ||
-			this.content.toLowerCase().indexOf.trim(searchObj.searchText.toLowerCase().trim()) != -1 
+			this.content.toLowerCase().trim().indexOf(searchObj.searchText.toLowerCase().trim()) != -1 
 			){
 				return true;
 			}

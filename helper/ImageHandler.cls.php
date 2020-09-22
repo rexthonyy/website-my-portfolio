@@ -7,10 +7,14 @@
 		//resizing max dimension
 		private $maxDim;
 		
+		//for uploading multiple files from a form
+		private $index;
+
 		//set the saveDir on instantiation format '/path/'
-		public function __construct($save_dir, $max_dim = array(240, 240)) {
+		public function __construct($save_dir, $max_dim = array(240, 240), $index) {
 			$this->saveDir = $save_dir;
 			$this->maxDim = $max_dim;
+			$this->index = $index;
 		}
 		
 		/**
@@ -24,17 +28,17 @@
 			list($name, $type, $tmp, $err, $size) = array_values($file);
 			
 			//if an error occured, throw an exception
-			if($err != UPLOAD_ERR_OK){
+			if($err[$this->index] != UPLOAD_ERR_OK){
 				throw new Exception ('An error occured with the upload!');
 				return;
 			}
 			
 			// generate a resized image
-			$this->doImageResize($tmp);
+			$this->doImageResize($tmp[$this->index]);
 			
 			// rename the file if the flag is set to true
 			if($rename === TRUE) {
-				$img_ext = $this->getImageExtension($type);
+				$img_ext = $this->getImageExtension($type[$this->index]);
 				$name = $this->renameFile($img_ext);
 			}
 			
@@ -48,7 +52,7 @@
 			$absolute = $_SERVER['DOCUMENT_ROOT'] . $filepath;
 			
 			//save the image
-			if(!move_uploaded_file($tmp, $absolute)){
+			if(!move_uploaded_file($tmp[$this->index], $filepath)){
 				throw new Exception("Couldn't save the uploaded file!");
 			}
 			
@@ -67,7 +71,8 @@
 		*/
 		private function checkSaveDir() {
 			// determines the path to check
-			$path = $_SERVER['DOCUMENT_ROOT'] . $this->saveDir;
+			//$path = $_SERVER['DOCUMENT_ROOT'] . $this->saveDir;
+			$path = $this->saveDir;
 			
 			// checks if the directory exists
 			if(!is_dir($path)) {
