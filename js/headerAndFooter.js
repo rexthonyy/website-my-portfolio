@@ -1,6 +1,7 @@
 function loadHeaderAndFooterJS(){
 	window.onscroll = scrollListener;
-
+	notifyNavItemListener();
+	
 	isClickedHamburger = false;
 	isChecked = false;
 	checkboxEffect = null;
@@ -80,13 +81,14 @@ function notifyNavBarListener(){
 }
 
 function notifyNavItemListener(){
-	var index = undefined;
-	var sections = getSection();
-	for(var i = 0; i < sections.length; i++){
-		var section = sections[i].getBoundingClientRect();
+	let index = undefined;
+	let sections = getSections();
+	for(let i = 0; i < sections.length; i++){
+		let section = sections[i].getBoundingClientRect();
 		if(section.top > 0){
-			index = i;
 			break;
+		}else{
+			index = i;
 		}
 	}
 	if(index != undefined){
@@ -97,34 +99,37 @@ function notifyNavItemListener(){
 }
 
 function disableAllNavHeaderItems(){
-	var activeItem = document.getElementsByClassName("nav_item_active")[0].className = "nav_item_inactive_translucent";
+	let navItems = document.getElementsByClassName("nav_item_active");
+	for(let i = 0; i < navItems.length; i++){
+		navItems[i].className = "nav_item_inactive_translucent";
+	}
 }
 
 function setActiveNavHeader(index){
 	switch(index){
-		case 1: //home
+		case 0: //home
 			document.getElementById("nav_item_home").className = "nav_item_active";
 		break;
 
-		case 2: //home
+		case 1: //about
 			document.getElementById("nav_item_about").className = "nav_item_active";
 		break;
 
-		case 3: //services
+		case 2: //services
 			document.getElementById("nav_item_services").className = "nav_item_active";
 		break;
 
-		case 4: //Portfolio
+		case 3: //Portfolio
 			document.getElementById("nav_item_portfolio").className = "nav_item_active";
 		break;
 
-		case 5: //Pricing
+		case 4: //Pricing
 			document.getElementById("nav_item_pricing").className = "nav_item_active";
 		break;
 	}
 }
 
-function getSection(){
+function getSections(){
 	return document.getElementsByTagName("section");
 }
 
