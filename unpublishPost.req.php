@@ -27,18 +27,15 @@
 			$dbTableOperator->update($dbTable, $dbTableQuery);
 		}
 
-		$columns = Column::ID.",".Column::ISPUBLISHED.",".Column::TITLE.",".Column::CONTENT.",".Column::CREATED.",".Column::LAST_UPDATED;
-	
-		$properties['columns'] = $columns;
-		$properties['condition'] = "";
-		$properties['orderBy'] = "";
-		$properties['limit'] = "";
+		$sql = 
+		"SELECT id, isPublished, title, content, created, last_updated,
+		(SELECT COUNT(id) FROM analytics_tb WHERE blog_id = blog_tb.id) AS views
+		FROM blog_tb";
+
 		$database = new Database(DB::INFO, DB::USER, DB::PASS);
-		$dbTable = new DbTable($database, Table::BLOG_TB); 
-		$dbTableQuery = new DbTableQuery($properties);
 		$dbTableOperator = new DbTableOperator();
-		$blogPosts = $dbTableOperator->read($dbTable, $dbTableQuery, new DbPrepareResult());
-		
-		echo isset($blogPosts) ? json_encode($blogPosts) : "[]";
+		$blogPosts = $dbTableOperator->readRawSQL($sql, $database, new DbPrepareResult());
+
+		echo $blogPosts == null ? "[]" : json_encode($blogPosts);
 	}
 ?>

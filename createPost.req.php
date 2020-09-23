@@ -7,7 +7,6 @@
 		include_once "database/DbTable.cls.php";
 		include_once "database/DbTableQuery.cls.php";
 		include_once "database/DbTableOperator.cls.php";
-		include_once "helper/ImageHandler.cls.php";
 		
 		//print_r($_POST);
 		//exit;

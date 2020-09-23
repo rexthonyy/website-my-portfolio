@@ -2,7 +2,7 @@ window.onload = function(){
 	setLoginButtonClickListener();
 	//setEventListeners();
 	sendDashboardAccessRequestToServers();
-	WEBSITE_URL = "www.myurl.com/post.php?id=";
+	WEBSITE_URL = "localhost/apps/website-my-portfolio/post.php?id=";
 }
 
 function setEventListeners(){
@@ -142,7 +142,7 @@ function setSearchButtonListener(){
 	searchBtn.onclick = clickListener;
 	
 	let searchInput = getSearchBar();
-	//searchInput.removeListener("keyup", undefined);
+	//searchInput.removeEventListener("keyup", undefined);
 	searchInput.addEventListener("keyup", function(event){
 		event.preventDefault();
 		if(event.keyCode === 13){
@@ -774,7 +774,8 @@ function loadPostData(jsonObj){
 			jsonObj[i].isPublished,
 			jsonObj[i].title,
 			jsonObj[i].content,
-			convertFromTimestampToJSDate(jsonObj[i].created)
+			convertFromTimestampToJSDate(jsonObj[i].created),
+			jsonObj[i].views
 		));
 	}
 
@@ -829,6 +830,7 @@ function updatePostLayout(){
 			let title = postList[i].title;
 			let content = postList[i].content;
 			let created = postList[i].created;
+			let views = postList[i].views;
 
 			let isPublishedLayout = isPublished ? ">Published" : "style='color:orange;'>Draft";
 			let publishIcon = isPublished ? "ic_unpublish.png" : "ic_publish.png";
@@ -861,8 +863,8 @@ function updatePostLayout(){
 									"<td>" +
 										"<span>" +
 											"<button class='postActionBtnSmall' style='margin-right: 16px;'><img id='"+id+"' class='shareBtn' src='images/icons/ic_share.png'  width='18px' height='18px' title='Share post'/></button>" +
-											"<span>" +
-												"0<button class='postActionBtnSmall'><img id='"+id+"' class='analyticsBtn' src='images/icons/ic_chart.png'  width='18px' height='18px' title='View analytics'/></button>" +
+											"<span>" +views+
+												"<button class='postActionBtnSmall'><img id='"+id+"' class='analyticsBtn' src='images/icons/ic_chart.png'  width='18px' height='18px' title='View analytics'/></button>" +
 											"</span>" +
 										"</span>" +
 									"</td>" +
@@ -877,12 +879,13 @@ function updatePostLayout(){
 	document.getElementById("postContainer").innerHTML = html;
 }
 
-function Post(id, isPublished, title, content, created){
+function Post(id, isPublished, title, content, created, views){
 	this.id = id;
 	this.isPublished = isPublished;
 	this.title = title;
 	this.content = content;
 	this.created = created;
+	this.views = views;
 
 	this.equals = function (searchObj){
 		if(this.isPublished.toLowerCase() == searchObj.filter.toLowerCase() || searchObj.filter.toLowerCase() == "all"){

@@ -1,3 +1,60 @@
+<?php
+	$isError = true;
+
+	if(isset($_GET["id"])){
+		include_once "database/DB.const.php";
+		include_once "database/Table.const.php";
+		include_once "database/Column.const.php";
+		include_once "database/Database.cls.php";
+		include_once "database/DbTable.cls.php";
+		include_once "database/DbTableQuery.cls.php";
+		include_once "database/DbTableOperator.cls.php";
+		
+		//check whether the post is available
+		//check whether the post is published
+
+		$sql = "SELECT isPublished FROM blog_tb WHERE id = ". $_GET["id"];
+
+		$database = new Database(DB::INFO, DB::USER, DB::PASS);
+		$dbTableOperator = new DbTableOperator();
+		$blogPost = $dbTableOperator->readRawSQL($sql, $database, new DbPrepareResult());
+
+		if($blogPost != null){
+			if($blogPost[0][Column::ISPUBLISHED] == "true"){
+				$blog_id = $_GET["id"];
+				$ip_address = $_SERVER['REMOTE_ADDR'];
+				$referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : "";
+
+				//echo "Blog id = ".$blog_id."<br/>ipAddress = ".$ip_address."<br/>Referrer = ".$referrer;
+				//exit;
+
+				$columns = "(".Column::BLOG_ID.",".Column::IP_ADDRESS.",".Column::REFERRER.")";
+				$tokens = "(?, ?, ?)";
+				$values = array();
+				$values[] = $blog_id;
+				$values[] = $ip_address;
+				$values[] = $referrer;
+
+				$properties['columns'] = $columns;
+				$properties['values'] = $values;
+				$properties['tokens'] = $tokens;
+				
+				$database = new Database(DB::INFO, DB::USER, DB::PASS);
+				$dbTable = new DbTable($database, Table::ANALYTICS_TB); 
+				$dbTableQuery = new DbTableQuery($properties);
+				$dbTableOperator = new DbTableOperator();
+				$dbTableOperator->insert($dbTable, $dbTableQuery);
+				$isError = false;
+			}
+		}
+	}
+
+	if($isError){
+		header('Location:404.html');
+		exit;
+	}
+?>
+
 <!DOCTYPE html>
 
 <html>

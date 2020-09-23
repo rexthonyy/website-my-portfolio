@@ -13,5 +13,10 @@
 		//image_tb
 		const NAME = "name";
 		const IMAGE_LINK = "image_link";
+
+		//analytics_tb
+		const BLOG_ID = "blog_id";
+		const IP_ADDRESS = "ip_address";
+		const REFERRER = "referrer";
 	}
 ?>
